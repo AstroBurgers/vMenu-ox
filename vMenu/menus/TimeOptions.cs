@@ -115,8 +115,8 @@ namespace vMenuClient.menus
                     }
 
                     var newMinute = 0;
-                    string time = $"**{item.Text} - {item.Label}**";
-                    bool confirmed = await GetUserConfirmation("Change Time", $"Please confirm that you want to change the time to: {time}");
+                    var time = $"**{item.Text} - {item.Label}**";
+                    var confirmed = await GetUserConfirmation("Change Time", $"Please confirm that you want to change the time to: {time}");
                     if (confirmed)
                     {
                         Subtitle.Info($"Time set to ~y~{(newHour < 10 ? $"0{newHour}" : newHour.ToString())}~s~:~y~" +
@@ -141,8 +141,8 @@ namespace vMenuClient.menus
                     newMinute = item.ListIndex;
                 }
 
-                string time = $"{(newHour < 10 ? $"0{newHour}" : newHour.ToString())}:{(newMinute < 10 ? $"0{newMinute}" : newMinute.ToString())}";
-                bool confirmed = await GetUserConfirmation("Change Time", $"Please confirm that you want to change the time to: {time}");
+                var time = $"{(newHour < 10 ? $"0{newHour}" : newHour.ToString())}:{(newMinute < 10 ? $"0{newMinute}" : newMinute.ToString())}";
+                var confirmed = await GetUserConfirmation("Change Time", $"Please confirm that you want to change the time to: {time}");
                 if (confirmed)
                 {
                     Subtitle.Info($"Time set to ~y~{(newHour < 10 ? $"0{newHour}" : newHour.ToString())}~s~:~y~" +

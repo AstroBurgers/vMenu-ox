@@ -378,7 +378,7 @@ namespace vMenuClient.menus
                             if (item == dmgMultBtn)
                             {
                                 var multString = await GetUserInput("Weapon Damage Multiplier", defaultDmgMult);
-                                if (float.TryParse(multString, out float multInput))
+                                if (float.TryParse(multString, out var multInput))
                                 {
                                     SetWeaponDamageModifier(hash, multInput);
                                     item.Label = multInput + "x";
@@ -393,7 +393,7 @@ namespace vMenuClient.menus
                             else if (item == shakeAmplitudeBtn)
                             {
                                 var shakeString = await GetUserInput("Weapon Shake Amplitude", defaultShakeAmplitude);
-                                if (float.TryParse(shakeString, out float shakeInput))
+                                if (float.TryParse(shakeString, out var shakeInput))
                                 {
                                     SetWeaponRecoilShakeAmplitude(hash, shakeInput);
                                     item.Label = shakeInput + "x";
@@ -458,7 +458,7 @@ namespace vMenuClient.menus
                             if (HasPedGotWeapon(Game.PlayerPed.Handle, hash, false))
                             {
                                 RemoveWeaponFromPed(Game.PlayerPed.Handle, hash);
-                                bool hasWeapon = HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Hash, false);
+                                var hasWeapon = HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Hash, false);
                                 foreach (var kvp in weaponComponents)
                                 {
                                     var compKey = kvp.Value;
@@ -466,7 +466,7 @@ namespace vMenuClient.menus
                                     {
                                         if (weapon.Components.ContainsKey(compKey))
                                         {
-                                            if (weapon.Components.TryGetValue(compKey, out uint compHash))
+                                            if (weapon.Components.TryGetValue(compKey, out var compHash))
                                             {
                                                 compItem.Enabled = HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Hash, false);
                                                 compItem.Checked = HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, compHash);
@@ -487,7 +487,7 @@ namespace vMenuClient.menus
                                 var ammo = 255;
                                 GetMaxAmmo(Game.PlayerPed.Handle, hash, ref ammo);
                                 GiveWeaponToPed(Game.PlayerPed.Handle, hash, ammo, false, true);
-                                bool hasWeapon = HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Hash, false);
+                                var hasWeapon = HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Hash, false);
                                 foreach (var kvp in weaponComponents)
                                 {
                                     var compKey = kvp.Value;
@@ -495,7 +495,7 @@ namespace vMenuClient.menus
                                     {
                                         if (weapon.Components.ContainsKey(compKey))
                                         {
-                                            if (weapon.Components.TryGetValue(compKey, out uint compHash))
+                                            if (weapon.Components.TryGetValue(compKey, out var compHash))
                                             {
                                                 compItem.Enabled = HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Hash, false);
                                                 compItem.Checked = HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, compHash);
@@ -541,7 +541,7 @@ namespace vMenuClient.menus
                             }
                             else
                             {
-                                if (weapon.Components.TryGetValue(comp.Key, out uint compHash))
+                                if (weapon.Components.TryGetValue(comp.Key, out var compHash))
                                     {
                                         compItem.Checked = HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, compHash);
                                     }
@@ -569,7 +569,7 @@ namespace vMenuClient.menus
                                             {
                                                 if (weapon.Components.ContainsKey(compKey))
                                                 {
-                                                    if (weapon.Components.TryGetValue(compKey, out uint compHash))
+                                                    if (weapon.Components.TryGetValue(compKey, out var compHash))
                                                     {
                                                         compItem.Enabled = HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Hash, false);
                                                         compItem.Checked = HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, compHash);
@@ -589,7 +589,7 @@ namespace vMenuClient.menus
                                             {
                                                 if (weapon.Components.ContainsKey(compKey))
                                                 {
-                                                    if (weapon.Components.TryGetValue(compKey, out uint compHash))
+                                                    if (weapon.Components.TryGetValue(compKey, out var compHash))
                                                     {
                                                         compItem.Enabled = HasPedGotWeapon(Game.PlayerPed.Handle, weapon.Hash, false);
                                                         compItem.Checked = HasPedGotWeaponComponent(Game.PlayerPed.Handle, weapon.Hash, compHash);

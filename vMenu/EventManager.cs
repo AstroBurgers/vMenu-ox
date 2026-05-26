@@ -127,16 +127,16 @@ namespace vMenuClient
             // reset extras
             VehicleOptions.VehicleExtras = new Dictionary<uint, Dictionary<int, string>>();
 
-            string jsonData = LoadResourceFile(GetCurrentResourceName(), "config/extras.json") ?? "{}";
+            var jsonData = LoadResourceFile(GetCurrentResourceName(), "config/extras.json") ?? "{}";
 
             try
             {
                 // load new extras.
                 var extras = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<int, string>>>(jsonData);
 
-                foreach (string model in extras.Keys)
+                foreach (var model in extras.Keys)
                 {
-                    uint modelHash = (uint)GetHashKey(model);
+                    var modelHash = (uint)GetHashKey(model);
 
                     if (extras[model] != null && extras[model].Count > 0)
                     {
@@ -144,7 +144,7 @@ namespace vMenuClient
                             VehicleOptions.VehicleExtras.Add(modelHash, extras[model]);
                         else
                         {
-                            foreach(int extra in extras[model].Keys)
+                            foreach(var extra in extras[model].Keys)
                             {
                                 if(!VehicleOptions.VehicleExtras[modelHash].ContainsKey(extra))
                                     VehicleOptions.VehicleExtras[modelHash].Add(extra, extras[model][extra]);

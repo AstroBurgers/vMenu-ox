@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 using CitizenFX.Core;
 
@@ -30,9 +32,9 @@ namespace vMenuClient.menus
             public string uuid;
         }
 
-        BanRecord currentRecord = new();
+        BanRecord currentRecord;
 
-        public List<BanRecord> banlist = new();
+        public List<BanRecord> banlist = [];
 
         readonly Menu bannedPlayer = new("Banned Player", "Ban Record: ");
 
@@ -134,16 +136,9 @@ namespace vMenuClient.menus
                 nameItem.Description = "Player name: ~y~" + currentRecord.playerName;
                 bannedByItem.Label = currentRecord.bannedBy;
                 bannedByItem.Description = "Player banned by: ~y~" + currentRecord.bannedBy;
-                if (currentRecord.bannedUntil.Date.Year == 3000)
-                {
-                    bannedUntilItem.Label = "Forever";
-                }
-                else
-                {
-                    bannedUntilItem.Label = currentRecord.bannedUntil.Date.ToString();
-                }
+                bannedUntilItem.Label = currentRecord.bannedUntil.Date.Year == 3000 ? "Forever" : currentRecord.bannedUntil.Date.ToString(CultureInfo.CurrentCulture);
 
-                bannedUntilItem.Description = "This player is banned until: " + currentRecord.bannedUntil.Date.ToString();
+                bannedUntilItem.Description = "This player is banned until: " + currentRecord.bannedUntil.Date.ToString(CultureInfo.CurrentCulture);
                 playerIdentifiersItem.Description = "";
 
                 var i = 0;
@@ -187,13 +182,12 @@ namespace vMenuClient.menus
             menu.ResetFilter();
             menu.ClearMenuItems();
 
-            foreach (var ban in banlist)
+            foreach (var recordBtn in banlist.Select(ban => new MenuItem(ban.playerName, $"~y~{ban.playerName}~s~ was banned by ~y~{ban.bannedBy}~s~ until ~y~{ban.bannedUntil}~s~ for ~y~{ban.banReason}~s~.")
+                     {
+                         Label = "→→→",
+                         ItemData = ban
+                     }))
             {
-                var recordBtn = new MenuItem(ban.playerName, $"~y~{ban.playerName}~s~ was banned by ~y~{ban.bannedBy}~s~ until ~y~{ban.bannedUntil}~s~ for ~y~{ban.banReason}~s~.")
-                {
-                    Label = "→→→",
-                    ItemData = ban
-                };
                 menu.AddMenuItem(recordBtn);
                 MenuController.BindMenuItem(menu, bannedPlayer, recordBtn);
             }
@@ -249,30 +243,26 @@ namespace vMenuClient.menus
             {
                 var key = brValue.Name.ToString();
                 var value = brValue.Value;
-                if (key == "playerName")
+                switch (key)
                 {
-                    newBr.playerName = value.ToString();
-                }
-                else if (key == "identifiers")
-                {
-                    var tmpList = new List<string>();
-                    foreach (var identifier in value)
-                    {
-                        tmpList.Add(identifier.ToString());
-                    }
-                    newBr.identifiers = tmpList;
-                }
-                else if (key == "bannedUntil")
-                {
-                    newBr.bannedUntil = DateTime.Parse(value.ToString());
-                }
-                else if (key == "banReason")
-                {
-                    newBr.banReason = value.ToString();
-                }
-                else if (key == "bannedBy")
-                {
-                    newBr.bannedBy = value.ToString();
+                    case "playerName":
+                        newBr.playerName = value.ToString();
+                        break;
+                    case "identifiers":
+                        {
+                            var tmpList = value.Select(identifier => identifier.ToString()).ToList();
+                            newBr.identifiers = tmpList;
+                            break;
+                        }
+                    case "bannedUntil":
+                        newBr.bannedUntil = DateTime.Parse(value.ToString());
+                        break;
+                    case "banReason":
+                        newBr.banReason = value.ToString();
+                        break;
+                    case "bannedBy":
+                        newBr.bannedBy = value.ToString();
+                        break;
                 }
             }
             return newBr;

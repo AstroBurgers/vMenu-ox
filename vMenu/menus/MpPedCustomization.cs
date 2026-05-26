@@ -40,14 +40,18 @@ namespace vMenuClient.menus
         internal MenuItem editPedBtn = new("Edit Saved Character", "This allows you to edit everything about your saved character. The changes will be saved to this character's save file entry once you hit the save button.");
 
         // Need to be editable from other functions
-        private readonly MenuListItem setCategoryBtn = new("Set Character Category", new List<string> { }, 0, "Sets this character's category. Select to save.");
-        private readonly MenuListItem categoryBtn = new("Character Category", new List<string> { }, 0, "Sets this character's category.");
+        private readonly MenuListItem setCategoryBtn = new("Set Character Category", [], 0, "Sets this character's category. Select to save.");
+        private readonly MenuListItem categoryBtn = new("Character Category", [], 0, "Sets this character's category.");
 
         public static bool DontCloseMenus { get { return MenuController.PreventExitingMenu; } set { MenuController.PreventExitingMenu = value; } }
         public static bool DisableBackButton { get { return MenuController.DisableBackButton; } set { MenuController.DisableBackButton = value; } }
         string selectedSavedCharacterManageName = "";
-        private bool isEdidtingPed = false;
-        private readonly List<string> facial_expressions = new() { "mood_Normal_1", "mood_Happy_1", "mood_Angry_1", "mood_Aiming_1", "mood_Injured_1", "mood_stressed_1", "mood_smug_1", "mood_sulk_1", };
+        private bool isEdidtingPed;
+        private readonly List<string> facial_expressions =
+        [
+            "mood_Normal_1", "mood_Happy_1", "mood_Angry_1", "mood_Aiming_1", "mood_Injured_1", "mood_stressed_1",
+            "mood_smug_1", "mood_sulk_1"
+        ];
 
         private readonly List<string> parents = [];
         private readonly List<float> mixValues = [0.0f, 0.1f, 0.2f, 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f];
@@ -130,8 +134,8 @@ namespace vMenuClient.menus
         private int _eyeColorSelection;
         private int _facialExpressionSelection;
 
-        private MultiplayerPedData currentCharacter = new();
-        private MpCharacterCategory currentCategory = new();
+        private MultiplayerPedData currentCharacter;
+        private MpCharacterCategory currentCategory;
 
         public MpPedCustomization()
         {
@@ -172,7 +176,7 @@ namespace vMenuClient.menus
             }
             else
             {
-                PedHeadBlendData headBlendData = currentCharacter.PedHeadBlendData;
+                var headBlendData = currentCharacter.PedHeadBlendData;
 
                 _dadSelection = headBlendData.FirstFaceShape;
                 _mumSelection = headBlendData.SecondFaceShape;
@@ -226,14 +230,14 @@ namespace vMenuClient.menus
                 _hairHighlightColorSelection = 0;
                 _eyeColorSelection = 0;
 
-                for (int i = 0; i < 12; i++)
+                for (var i = 0; i < 12; i++)
                 {
                     appearanceValues[i] = new Tuple<int, int, float>(0, 0, 0f);
                 }
             }
             else
             {
-                PedAppearance appearanceData = currentCharacter.PedAppearance;
+                var appearanceData = currentCharacter.PedAppearance;
 
                 _hairSelection = appearanceData.hairStyle;
                 _hairColorSelection = appearanceData.hairColor;
@@ -623,7 +627,7 @@ namespace vMenuClient.menus
             #endregion
 
             #region face features menu
-            foreach (MenuSliderItem item in faceShapeMenu.GetMenuItems())
+            foreach (var item in faceShapeMenu.GetMenuItems().Cast<MenuSliderItem>())
             {
                 if (editPed)
                 {
@@ -773,18 +777,18 @@ namespace vMenuClient.menus
             tattoosMenu.AddMenuItem(new MenuItem("Remove All Tattoos", "Click this if you want to remove all tattoos and start over."));
             #endregion
 
-            List<string> categoryNames = GetAllCategoryNames();
+            var categoryNames = GetAllCategoryNames();
 
             categoryNames.RemoveAt(0);
 
-            List<MenuItem.Icon> categoryIcons = GetCategoryIcons(categoryNames);
+            var categoryIcons = GetCategoryIcons(categoryNames);
 
             categoryBtn.ItemData = new Tuple<List<string>, List<MenuItem.Icon>>(categoryNames, categoryIcons);
             categoryBtn.ListItems = categoryNames;            
 
             if (editPed)
             {
-                int characterCategoryIndex = categoryNames.IndexOf(currentCharacter.Category);
+                var characterCategoryIndex = categoryNames.IndexOf(currentCharacter.Category);
 
                 categoryBtn.ListIndex = characterCategoryIndex;
             }
@@ -859,72 +863,72 @@ namespace vMenuClient.menus
         /// </summary>
         private void CreateMenu()
         {
-            for (int i = 0; i < 46; i++)
+            for (var i = 0; i < 46; i++)
             {
                 parents.Add($"#{i}");
             }
 
-            for (int i = 0; i < GetNumHairColors(); i++)
+            for (var i = 0; i < GetNumHairColors(); i++)
             {
                 overlayColorsList.Add($"Color #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(0); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(0); i++)
             {
                 blemishesStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(1); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(1); i++)
             {
                 beardStylesList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(2); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(2); i++)
             {
                 eyebrowsStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(3); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(3); i++)
             {
                 ageingStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(4); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(4); i++)
             {
                 makeupStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(5); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(5); i++)
             {
                 blushStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(6); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(6); i++)
             {
                 complexionStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(7); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(7); i++)
             {
                 sunDamageStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(8); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(8); i++)
             {
                 lipstickStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(9); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(9); i++)
             {
                 molesFrecklesStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(10); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(10); i++)
             {
                 chestHairStyleList.Add($"Style #{i + 1}");
             }
 
-            for (int i = 0; i < GetNumHeadOverlayValues(11); i++)
+            for (var i = 0; i < GetNumHeadOverlayValues(11); i++)
             {
                 bodyBlemishesList.Add($"Style #{i + 1}");
             }
@@ -1011,7 +1015,8 @@ namespace vMenuClient.menus
 
             var saveButton = new MenuItem("Save Character", "Save your character.");
             var exitNoSave = new MenuItem("Exit Without Saving", "Are you sure? All unsaved work will be lost.");
-            var faceExpressionList = new MenuListItem("Facial Expression", new List<string> { "Normal", "Happy", "Angry", "Aiming", "Injured", "Stressed", "Smug", "Sulk" }, 0, "Set a facial expression that will be used whenever your ped is idling.");
+            var faceExpressionList = new MenuListItem("Facial Expression",
+                ["Normal", "Happy", "Angry", "Aiming", "Injured", "Stressed", "Smug", "Sulk"], 0, "Set a facial expression that will be used whenever your ped is idling.");
 
             inheritanceButton.Label = "→→→";
             appearanceButton.Label = "→→→";
@@ -1551,13 +1556,13 @@ namespace vMenuClient.menus
             #region tattoos
             void CreateListsIfNull()
             {
-                currentCharacter.PedTatttoos.HeadTattoos ??= new List<KeyValuePair<string, string>>();
-                currentCharacter.PedTatttoos.TorsoTattoos ??= new List<KeyValuePair<string, string>>();
-                currentCharacter.PedTatttoos.LeftArmTattoos ??= new List<KeyValuePair<string, string>>();
-                currentCharacter.PedTatttoos.RightArmTattoos ??= new List<KeyValuePair<string, string>>();
-                currentCharacter.PedTatttoos.LeftLegTattoos ??= new List<KeyValuePair<string, string>>();
-                currentCharacter.PedTatttoos.RightLegTattoos ??= new List<KeyValuePair<string, string>>();
-                currentCharacter.PedTatttoos.BadgeTattoos ??= new List<KeyValuePair<string, string>>();
+                currentCharacter.PedTatttoos.HeadTattoos ??= [];
+                currentCharacter.PedTatttoos.TorsoTattoos ??= [];
+                currentCharacter.PedTatttoos.LeftArmTattoos ??= [];
+                currentCharacter.PedTatttoos.RightArmTattoos ??= [];
+                currentCharacter.PedTatttoos.LeftLegTattoos ??= [];
+                currentCharacter.PedTatttoos.RightLegTattoos ??= [];
+                currentCharacter.PedTatttoos.BadgeTattoos ??= [];
             }
 
             void ApplySavedTattoos()
@@ -1843,27 +1848,27 @@ namespace vMenuClient.menus
                         currentCharacter.FaceShapeFeatures.features = [];
                     }
 
-                    for (int i = 0; i < 20; i++)
+                    for (var i = 0; i < 20; i++)
                     {
                         shapeFaceValues[i] = _random.Next(5, 15);
                         SetPedFaceFeature(Game.PlayerPed.Handle, i, faceFeaturesValuesList[shapeFaceValues[i]]);
                         currentCharacter.FaceShapeFeatures.features[i] = faceFeaturesValuesList[shapeFaceValues[i]];
                     }
 
-                    int bodyHair = _random.Next(31);
+                    var bodyHair = _random.Next(31);
 
                     ChangePlayerHair(_random.Next(0, GetNumberOfPedDrawableVariations(Game.PlayerPed.Handle, 2)));
                     ChangePlayerHairColor(bodyHair, _random.Next(31));
                     ChangePlayerEyeColor(_random.Next(0, 9));
 
-                    for (int i = 0; i < 12; i++)
+                    for (var i = 0; i < 12; i++)
                     {
                         int value;
-                        int colorIndex = 0;
-                        bool colorRequired = false;
+                        var colorIndex = 0;
+                        var colorRequired = false;
 
-                        int color = i == 1 || i == 2 || i == 10 ? bodyHair : _random.Next(17);
-                        float opacity = (float)_random.NextDouble();
+                        var color = i == 1 || i == 2 || i == 10 ? bodyHair : _random.Next(17);
+                        var opacity = (float)_random.NextDouble();
 
                         switch (i)
                         {
@@ -2047,9 +2052,9 @@ namespace vMenuClient.menus
                 }
                 else if (item == faceButton)
                 {
-                    List<MenuItem> items = faceShapeMenu.GetMenuItems();
+                    var items = faceShapeMenu.GetMenuItems();
 
-                    for (int i = 0; i < 20; i++)
+                    for (var i = 0; i < 20; i++)
                     {
                         if (items[i] is MenuSliderItem sliderItem)
                         {
@@ -2202,7 +2207,7 @@ namespace vMenuClient.menus
                     // }
                     // else
                     // {
-                        bool success = await LoadSharedOutfit();
+                        var success = await LoadSharedOutfit();
                         if (success)
                         {
                             MenuController.CloseAllMenus();
@@ -2482,7 +2487,7 @@ namespace vMenuClient.menus
             {
                 var tmpCharacter = StorageManager.GetSavedMpCharacterData("mp_ped_" + selectedSavedCharacterManageName);
 
-                string name = listItem.ListItems[listIndex];
+                var name = listItem.ListItems[listIndex];
 
                 if (name == "Create New")
                 {
@@ -2540,7 +2545,7 @@ namespace vMenuClient.menus
             // reset the "are you sure" state.
             manageSavedCharacterMenu.OnMenuClose += (sender) =>
             {
-                foreach (MenuItem item in manageSavedCharacterMenu.GetMenuItems())
+                foreach (var item in manageSavedCharacterMenu.GetMenuItems())
                 {
                     if (item.Label == "Are you sure?")
                     {
@@ -2593,7 +2598,7 @@ namespace vMenuClient.menus
                     currentCategory = item.ItemData;
                 }
 
-                bool isUncategorized = currentCategory.Name == "Uncategorized";
+                var isUncategorized = currentCategory.Name == "Uncategorized";
 
                 savedCharactersCategoryMenu.MenuTitle = currentCategory.Name;
                 savedCharactersCategoryMenu.MenuSubtitle = $"~s~Category: ~y~{currentCategory.Name}";
@@ -2603,8 +2608,8 @@ namespace vMenuClient.menus
 
                 string ChangeCallback(MenuDynamicListItem item, bool left)
                 {
-                    int currentIndex = iconNames.IndexOf(item.CurrentItem);
-                    int newIndex = left ? currentIndex - 1 : currentIndex + 1;
+                    var currentIndex = iconNames.IndexOf(item.CurrentItem);
+                    var newIndex = left ? currentIndex - 1 : currentIndex + 1;
 
                     // If going past the start or end of the list
                     if (iconNames.ElementAtOrDefault(newIndex) == default)
@@ -2656,7 +2661,7 @@ namespace vMenuClient.menus
                 var spacer = GetSpacerMenuItem("↓ Characters ↓");
                 savedCharactersCategoryMenu.AddMenuItem(spacer);
 
-                List<string> names = GetAllMpCharacterNames();
+                var names = GetAllMpCharacterNames();
 
                 if (names.Count > 0)
                 {
@@ -2717,7 +2722,7 @@ namespace vMenuClient.menus
                     return;
                 }
 
-                MultiplayerPedData character = StorageManager.GetSavedMpCharacterData(newItem.Text);
+                var character = StorageManager.GetSavedMpCharacterData(newItem.Text);
 
                 if (!HasModelLoaded(character.ModelHash))
                 {
@@ -2733,8 +2738,8 @@ namespace vMenuClient.menus
                 /// https://forum.cfx.re/t/free-standalone-virtual-ped/5052458
                 ///
 
-                Ped playerPed = Game.PlayerPed;
-                Vector3 clientPedPosition = playerPed.Position;
+                var playerPed = Game.PlayerPed;
+                var clientPedPosition = playerPed.Position;
 
                 _clone = new Ped(CreatePed(26, character.ModelHash, clientPedPosition.X, clientPedPosition.Y, clientPedPosition.Z - 3f, playerPed.Heading, false, false))
                 {
@@ -2744,7 +2749,7 @@ namespace vMenuClient.menus
                     IsPositionFrozen = true
                 };
 
-                int cloneHandle = _clone.Handle;
+                var cloneHandle = _clone.Handle;
 
                 await AppySavedDataToPed(character, cloneHandle);
 
@@ -2753,12 +2758,12 @@ namespace vMenuClient.menus
 
                 while (Entity.Exists(_clone))
                 {
-                    Vector3 worldCoord = Vector3.Zero;
-                    Vector3 normal = Vector3.Zero;
+                    var worldCoord = Vector3.Zero;
+                    var normal = Vector3.Zero;
 
                     GetWorldCoordFromScreenCoord(0.6f, 0.8f, ref worldCoord, ref normal);
 
-                    Vector3 cameraRotation = GameplayCamera.Rotation;
+                    var cameraRotation = GameplayCamera.Rotation;
 
                     _clone.Position = worldCoord + (normal * 3.5f);
                     _clone.Rotation = new Vector3(cameraRotation.X * -1, 0f, cameraRotation.Z + 180);
@@ -2790,7 +2795,7 @@ namespace vMenuClient.menus
                             return;
                         }
 
-                        string oldName = currentCategory.Name;
+                        var oldName = currentCategory.Name;
 
                         currentCategory.Name = name;
 
@@ -2798,9 +2803,9 @@ namespace vMenuClient.menus
                         {
                             StorageManager.DeleteSavedStorageItem("mp_character_category_" + oldName);
 
-                            int totalCount = 0;
-                            int updatedCount = 0;
-                            List<string> characterNames = GetAllMpCharacterNames();
+                            var totalCount = 0;
+                            var updatedCount = 0;
+                            var characterNames = GetAllMpCharacterNames();
 
                             if (characterNames.Count > 0)
                             {
@@ -2868,15 +2873,15 @@ namespace vMenuClient.menus
                     case 3:
                         if (item.Label == "Are you sure?")
                         {
-                            bool deletePeds = (sender.GetMenuItems().ElementAt(4) as MenuCheckboxItem).Checked;
+                            var deletePeds = (sender.GetMenuItems().ElementAt(4) as MenuCheckboxItem).Checked;
 
                             item.Label = "";
                             DeleteResourceKvp("mp_character_category_" + currentCategory.Name);
 
-                            int totalCount = 0;
-                            int updatedCount = 0;
+                            var totalCount = 0;
+                            var updatedCount = 0;
 
-                            List<string> characterNames = GetAllMpCharacterNames();
+                            var characterNames = GetAllMpCharacterNames();
 
                             if (characterNames.Count > 0)
                             {
@@ -2932,9 +2937,9 @@ namespace vMenuClient.menus
 
                     // Load saved character menu
                     default:
-                        List<string> categoryNames = GetAllCategoryNames();
-                        List<MenuItem.Icon> categoryIcons = GetCategoryIcons(categoryNames);
-                        int nameIndex = categoryNames.IndexOf(currentCategory.Name);
+                        var categoryNames = GetAllCategoryNames();
+                        var categoryIcons = GetCategoryIcons(categoryNames);
+                        var nameIndex = categoryNames.IndexOf(currentCategory.Name);
 
                         setCategoryBtn.ItemData = categoryIcons;
                         setCategoryBtn.ListItems = categoryNames;
@@ -2952,7 +2957,7 @@ namespace vMenuClient.menus
             savedCharactersCategoryMenu.OnDynamicListItemSelect += (_, _, currentItem) =>
             {
                 var iconNames = Enum.GetNames(typeof(MenuItem.Icon)).ToList();
-                int iconIndex = iconNames.IndexOf(currentItem);
+                var iconIndex = iconNames.IndexOf(currentItem);
 
                 currentCategory.Icon = (MenuItem.Icon)iconIndex;
 
@@ -3016,7 +3021,7 @@ namespace vMenuClient.menus
                 categories.Sort((a, b) => a.ToLower().CompareTo(b.ToLower()));
                 foreach (var item in categories)
                 {
-                    MpCharacterCategory category = StorageManager.GetSavedMpCharacterCategoryData("mp_character_category_" + item);
+                    var category = StorageManager.GetSavedMpCharacterCategoryData("mp_character_category_" + item);
 
                     var btn = new MenuItem(category.Name, category.Description)
                     {
@@ -3058,7 +3063,7 @@ namespace vMenuClient.menus
 
         private List<MenuItem.Icon> GetCategoryIcons(List<string> categoryNames)
         {
-            List<MenuItem.Icon> icons = new List<MenuItem.Icon> { };
+            List<MenuItem.Icon> icons = [];
 
             foreach (var name in categoryNames)
             {
@@ -3091,20 +3096,20 @@ namespace vMenuClient.menus
 
         private MultiplayerPedData ReplacePedDataClothing(MultiplayerPedData character)
         {
-            int handle = Game.PlayerPed.Handle;
+            var handle = Game.PlayerPed.Handle;
 
             // Drawables
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
-                int drawable = GetPedDrawableVariation(handle, i);
-                int texture = GetPedTextureVariation(handle, i);
+                var drawable = GetPedDrawableVariation(handle, i);
+                var texture = GetPedTextureVariation(handle, i);
                 character.DrawableVariations.clothes[i] = new KeyValuePair<int, int>(drawable, texture);
             }
 
-            for (int i = 0; i < 8; i++)
+            for (var i = 0; i < 8; i++)
             {
-                int prop = GetPedPropIndex(handle, i);
-                int texture = GetPedPropTextureIndex(handle, i);
+                var prop = GetPedPropIndex(handle, i);
+                var texture = GetPedPropTextureIndex(handle, i);
                 character.PropVariations.props[i] = new KeyValuePair<int, int>(prop, texture);
             }
 
@@ -3176,7 +3181,7 @@ namespace vMenuClient.menus
 
                 currentCharacter.DrawableVariations.clothes[11] = new KeyValuePair<int, int>(15, 0);
 
-                int pantsColor = _random.Next(GetNumberOfPedTextureVariations(Game.PlayerPed.Handle, 4, 61));
+                var pantsColor = _random.Next(GetNumberOfPedTextureVariations(Game.PlayerPed.Handle, 4, 61));
 
                 SetPedComponentVariation(Game.PlayerPed.Handle, 4, 61, pantsColor, 0);
 
@@ -3193,7 +3198,7 @@ namespace vMenuClient.menus
 
                 currentCharacter.DrawableVariations.clothes[8] = new KeyValuePair<int, int>(14, 0);
 
-                int braColor = _random.Next(GetNumberOfPedTextureVariations(Game.PlayerPed.Handle, 4, 17));
+                var braColor = _random.Next(GetNumberOfPedTextureVariations(Game.PlayerPed.Handle, 4, 17));
 
                 SetPedComponentVariation(Game.PlayerPed.Handle, 4, 17, braColor, 0);
 
@@ -3217,10 +3222,10 @@ namespace vMenuClient.menus
         {
             SetHeadBlend();
 
-            for (int i = 0; i < 12; i++)
+            for (var i = 0; i < 12; i++)
             {
-                int color = 0;
-                int colorIndex = 0;
+                var color = 0;
+                var colorIndex = 0;
 
                 switch (i)
                 {
@@ -3269,7 +3274,7 @@ namespace vMenuClient.menus
         internal async Task AppySavedDataToPed(MultiplayerPedData character, int pedHandle)
         {
             #region headblend
-            PedHeadBlendData data = character.PedHeadBlendData;
+            var data = character.PedHeadBlendData;
             SetPedHeadBlendData(pedHandle, data.FirstFaceShape, data.SecondFaceShape, data.ThirdFaceShape, data.FirstSkinTone, data.SecondSkinTone, data.ThirdSkinTone, data.ParentFaceShapePercent, data.ParentSkinTonePercent, 0f, data.IsParentInheritance);
 
             while (!HasPedHeadBlendFinished(pedHandle))
@@ -3279,7 +3284,7 @@ namespace vMenuClient.menus
             #endregion
 
             #region appearance
-            PedAppearance appData = character.PedAppearance;
+            var appData = character.PedAppearance;
             // hair
             SetPedComponentVariation(pedHandle, 2, appData.hairStyle, 0, 0);
             SetPedHairColor(pedHandle, appData.hairColor, appData.hairHighlightColor);
@@ -3348,11 +3353,11 @@ namespace vMenuClient.menus
                 {
                     if (cd.Key < 0 || cd.Key > 11) { continue; };
 
-                    int maxDrawables = GetNumberOfPedDrawableVariations(pedHandle, cd.Key);
+                    var maxDrawables = GetNumberOfPedDrawableVariations(pedHandle, cd.Key);
                     if (cd.Value.Key < 0 || cd.Value.Key >= maxDrawables) { continue; };
 
-                    int maxTextures = GetNumberOfPedTextureVariations(pedHandle, cd.Key, cd.Value.Key);
-                    int textureIndex = cd.Value.Value >= 0 && cd.Value.Value < maxTextures ? cd.Value.Value : 0;
+                    var maxTextures = GetNumberOfPedTextureVariations(pedHandle, cd.Key, cd.Value.Key);
+                    var textureIndex = cd.Value.Value >= 0 && cd.Value.Value < maxTextures ? cd.Value.Value : 0;
                     
                     SetPedComponentVariation(pedHandle, cd.Key, cd.Value.Key, textureIndex, 0);
                 }
@@ -3366,7 +3371,7 @@ namespace vMenuClient.menus
                 {
                     if (cd.Value.Key > -1)
                     {
-                        int textureIndex = cd.Value.Value > -1 ? cd.Value.Value : 0;
+                        var textureIndex = cd.Value.Value > -1 ? cd.Value.Value : 0;
                         SetPedPropIndex(pedHandle, cd.Key, cd.Value.Key, textureIndex, true);
                     }
                 }
@@ -3377,31 +3382,31 @@ namespace vMenuClient.menus
 
             if (character.PedTatttoos.HeadTattoos == null)
             {
-                character.PedTatttoos.HeadTattoos = new List<KeyValuePair<string, string>>();
+                character.PedTatttoos.HeadTattoos = [];
             }
             if (character.PedTatttoos.TorsoTattoos == null)
             {
-                character.PedTatttoos.TorsoTattoos = new List<KeyValuePair<string, string>>();
+                character.PedTatttoos.TorsoTattoos = [];
             }
             if (character.PedTatttoos.LeftArmTattoos == null)
             {
-                character.PedTatttoos.LeftArmTattoos = new List<KeyValuePair<string, string>>();
+                character.PedTatttoos.LeftArmTattoos = [];
             }
             if (character.PedTatttoos.RightArmTattoos == null)
             {
-                character.PedTatttoos.RightArmTattoos = new List<KeyValuePair<string, string>>();
+                character.PedTatttoos.RightArmTattoos = [];
             }
             if (character.PedTatttoos.LeftLegTattoos == null)
             {
-                character.PedTatttoos.LeftLegTattoos = new List<KeyValuePair<string, string>>();
+                character.PedTatttoos.LeftLegTattoos = [];
             }
             if (character.PedTatttoos.RightLegTattoos == null)
             {
-                character.PedTatttoos.RightLegTattoos = new List<KeyValuePair<string, string>>();
+                character.PedTatttoos.RightLegTattoos = [];
             }
             if (character.PedTatttoos.BadgeTattoos == null)
             {
-                character.PedTatttoos.BadgeTattoos = new List<KeyValuePair<string, string>>();
+                character.PedTatttoos.BadgeTattoos = [];
             }
 
             foreach (var tattoo in character.PedTatttoos.HeadTattoos)

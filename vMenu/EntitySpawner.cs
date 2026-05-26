@@ -10,9 +10,9 @@ namespace vMenuClient
 {
     public class EntitySpawner : BaseScript
     {
-        public static bool Active { get; private set; } = false;
-        public static Entity CurrentEntity { get; private set; } = null;
-        private int scaleform = 0;
+        public static bool Active { get; private set; }
+        public static Entity CurrentEntity { get; private set; }
+        private int scaleform;
         private readonly float rotateSpeed = 20f;
 
         private const float RayDistance = 25f;

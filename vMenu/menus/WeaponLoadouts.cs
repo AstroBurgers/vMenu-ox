@@ -20,7 +20,7 @@ namespace vMenuClient.menus
     public class WeaponLoadouts
     {
         // Variables
-        private Menu menu = null;
+        private Menu menu;
         private readonly Menu SavedLoadoutsMenu = new("Saved Loadouts", "saved weapon loadouts list");
         private readonly Menu ManageLoadoutMenu = new("Mange Loadout", "Manage saved weapon loadout");
         public bool WeaponLoadoutsSetLoadoutOnRespawn { get; private set; } = UserDefaults.WeaponLoadoutsSetLoadoutOnRespawn;
@@ -251,7 +251,7 @@ namespace vMenuClient.menus
                 }
                 else if (item == loadLoadoutCodeButton)
                 {
-                    bool success = await LoadSharedLoadout();
+                    var success = await LoadSharedLoadout();
                 }
             };
 
@@ -295,7 +295,7 @@ namespace vMenuClient.menus
                     }
                     else if (item == generateLoadoutCodeButton)
                     {
-                        string currentlySelectedLoadoutSaveName = SelectedSavedLoadoutName.Replace("vmenu_string_saved_weapon_loadout_", "");
+                        var currentlySelectedLoadoutSaveName = SelectedSavedLoadoutName.Replace("vmenu_string_saved_weapon_loadout_", "");
                         TriggerEvent("vMenu:Loadout:GenerateCode", currentlySelectedLoadoutSaveName);
                     }
                     else if (item == setDefaultLoadout) // set as default

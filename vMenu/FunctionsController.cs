@@ -29,10 +29,10 @@ namespace vMenuClient
     /// </summary>
     class FunctionsController : BaseScript
     {
-        private int LastVehicle = 0;
-        private bool SwitchedVehicle = false;
-        private readonly List<int> deadPlayers = new();
-        private float cameraRotationHeading = 0f;
+        private int LastVehicle;
+        private bool SwitchedVehicle;
+        private readonly List<int> deadPlayers = [];
+        private float cameraRotationHeading;
 
         // show location variables
         private float safeZoneSizeX = (1 / GetSafeZoneSize() / 3.0f) - 0.358f;
@@ -40,22 +40,22 @@ namespace vMenuClient
         private string streetDisplay = "";
         private string headingDisplay = "";
 
-        private readonly List<int> waypointPlayerIdsToRemove = new();
+        private readonly List<int> waypointPlayerIdsToRemove = [];
         public const string clothingAnimationDecor = "clothing_animation_type";
-        private bool clothingAnimationReverse = false;
+        private bool clothingAnimationReverse;
         private float clothingOpacity = 1f;
 
         private const string snowball_anim_dict = "anim@mp_snowball";
         private const string snowball_anim_name = "pickup_snowball";
         private readonly uint snowball_hash = (uint)GetHashKey("weapon_snowball");
-        private bool showSnowballInfo = false;
+        private bool showSnowballInfo;
 
-        private bool stopPropsLoop = false;
-        private bool stopVehiclesLoop = false;
-        private bool stopPedsLoop = false;
-        private List<Prop> props = new();
-        private List<Vehicle> vehicles = new();
-        private List<Ped> peds = new();
+        private bool stopPropsLoop;
+        private bool stopVehiclesLoop;
+        private bool stopPedsLoop;
+        private List<Prop> props = [];
+        private List<Vehicle> vehicles = [];
+        private List<Ped> peds = [];
         private readonly Dictionary<int, string> overheadNamesCache = new();
         private readonly Dictionary<int, int> overheadColourCache = new();
 
@@ -70,7 +70,7 @@ namespace vMenuClient
 
             foreach (var kvp in dict)
             {
-                if (!int.TryParse(kvp.Key, out int playerId))
+                if (!int.TryParse(kvp.Key, out var playerId))
                     continue;
 
                 var entry = kvp.Value as IDictionary<string, object>;
@@ -902,8 +902,8 @@ namespace vMenuClient
         #endregion
 
         #region Main misc settings function
-        int radarSwitchTimer = 0;
-        int lastPressedPoint = 0;
+        int radarSwitchTimer;
+        int lastPressedPoint;
         /// <summary>
         /// Run all tasks that need to be handeled for the Misc Settings Menu.
         /// </summary>
@@ -1430,13 +1430,12 @@ namespace vMenuClient
 
         #region Player Appearance
 
-        internal static bool reverseCamera = false;
+        internal static bool reverseCamera;
         private static Camera camera;
         internal static float CameraFov { get; set; } = 45;
         internal static int CurrentCam { get; set; }
-        internal static List<KeyValuePair<Vector3, Vector3>> CameraOffsets { get; } = new List<KeyValuePair<Vector3, Vector3>>()
-        {
-            // Full body
+        internal static List<KeyValuePair<Vector3, Vector3>> CameraOffsets { get; } =
+        [
             new KeyValuePair<Vector3, Vector3>(new Vector3(0f, 2.8f, 0.3f), new Vector3(0f, 0f, 0f)),
 
             // Head level
@@ -1455,8 +1454,8 @@ namespace vMenuClient
             new KeyValuePair<Vector3, Vector3>(new Vector3(0f, 0.98f, 0.1f), new Vector3(0f, 0f, 0f)),
 
             // Full arms
-            new KeyValuePair<Vector3, Vector3>(new Vector3(0f, 1.3f, 0.35f), new Vector3(0f, 0f, 0.15f)),
-        };
+            new KeyValuePair<Vector3, Vector3>(new Vector3(0f, 1.3f, 0.35f), new Vector3(0f, 0f, 0.15f))
+        ];
 
         private async Task UpdateCamera(Camera oldCamera, Vector3 pos, Vector3 pointAt)
         {
@@ -2274,14 +2273,14 @@ namespace vMenuClient
                 {
                     foreach (var p in Players)
                     {
-                        int id = p.ServerId;
+                        var id = p.ServerId;
                         if (p != Game.Player)
                         {
-                            string overheadName = overheadNamesCache.ContainsKey(id) 
+                            var overheadName = overheadNamesCache.ContainsKey(id) 
                                 ? overheadNamesCache[id] 
                                 : $"{p.Name} [{id}]";
 
-                            int overheadColour = overheadColourCache.ContainsKey(id)
+                            var overheadColour = overheadColourCache.ContainsKey(id)
                                 ? overheadColourCache[id]
                                 : 0;
                             
@@ -2837,8 +2836,8 @@ namespace vMenuClient
         #endregion
 
         #region Personal Vehicle options
-        private bool didShowPvHelpMessage = false;
-        private int time = 0;
+        private bool didShowPvHelpMessage;
+        private int time;
         /// <summary>
         /// Manages personal vehicle options like locking doors while close.
         /// </summary>

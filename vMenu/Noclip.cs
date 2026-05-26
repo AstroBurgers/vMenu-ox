@@ -13,14 +13,14 @@ namespace vMenuClient
 {
     public class NoClip : BaseScript
     {
-        private static bool NoclipActive { get; set; } = false;
-        private static int MovingSpeed { get; set; } = 0;
+        private static bool NoclipActive { get; set; }
+        private static int MovingSpeed { get; set; }
         private static int Scale = -1;
         private static bool FollowCamMode { get; set; } = true;
 
 
-        private readonly List<string> speeds = new()
-        {
+        private readonly List<string> speeds =
+        [
             "12.5%",
             "25%",
             "37.5%",
@@ -29,7 +29,7 @@ namespace vMenuClient
             "75%",
             "87.5%",
             "100%"
-        };
+        ];
 
         public NoClip()
         {
@@ -66,11 +66,11 @@ namespace vMenuClient
         static string JOAAT(string command)
         {
             uint hash = 0;
-            string str = command.ToLower();
+            var str = command.ToLower();
 
-            for (int i = 0; i < str.Length; i++)
+            for (var i = 0; i < str.Length; i++)
             {
-                uint letter = (uint)str[i];
+                var letter = (uint)str[i];
                 hash += letter;
                 hash += (hash << 10);
                 hash ^= (hash >> 6);
@@ -149,7 +149,7 @@ namespace vMenuClient
 
                     BeginScaleformMovieMethod(Scale, "SET_DATA_SLOT");
                     ScaleformMovieMethodAddParamInt(6);
-                    string KeyMappingID = String.IsNullOrWhiteSpace(GetSettingsString(Setting.vmenu_keymapping_id)) ? "Default" : GetSettingsString(Setting.vmenu_keymapping_id);
+                    var KeyMappingID = String.IsNullOrWhiteSpace(GetSettingsString(Setting.vmenu_keymapping_id)) ? "Default" : GetSettingsString(Setting.vmenu_keymapping_id);
                     PushScaleformMovieMethodParameterString($"~INPUT_{JOAAT($"vMenu:{KeyMappingID}:NoClip")}~");
                     PushScaleformMovieMethodParameterString($"Toggle NoClip");
                     EndScaleformMovieMethod();

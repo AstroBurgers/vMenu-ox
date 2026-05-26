@@ -4,8 +4,8 @@ namespace vMenuClient.data
 {
     class PedScenarios
     {
-        public static List<string> PositionBasedScenarios = new()
-        {
+        public static List<string> PositionBasedScenarios =
+        [
             "PROP_HUMAN_SEAT_ARMCHAIR",
             "PROP_HUMAN_SEAT_BAR",
             "PROP_HUMAN_SEAT_BENCH",
@@ -22,8 +22,8 @@ namespace vMenuClient.data
             "PROP_HUMAN_SEAT_SUNLOUNGER",
             "WORLD_HUMAN_SEAT_LEDGE",
             "WORLD_HUMAN_SEAT_STEPS",
-            "WORLD_HUMAN_SEAT_WALL",
-        };
+            "WORLD_HUMAN_SEAT_WALL"
+        ];
 
         /// <summary>
         /// All scenario names (readable version) linked to the actual scenario strings (code names).
@@ -126,8 +126,8 @@ namespace vMenuClient.data
         /// <summary>
         /// A list containing all readable strings.
         /// </summary>
-        public static List<string> Scenarios = new()
-        {
+        public static List<string> Scenarios =
+        [
             "AA Drink Coffee",
             "AA Smoke Cig",
             "Binoculars",
@@ -218,7 +218,7 @@ namespace vMenuClient.data
             "Medic Tend To Dead",
             "Medic Time Of Death",
             "Police Crowd Control",
-            "Police Investigate",
-        };
+            "Police Investigate"
+        ];
     }
 }

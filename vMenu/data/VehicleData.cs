@@ -105,8 +105,8 @@ namespace vMenuClient.data
             }
         }
 
-        public static readonly List<VehicleColor> ClassicColors = new()
-        {
+        public static readonly List<VehicleColor> ClassicColors =
+        [
             new VehicleColor(0, "BLACK"),
             new VehicleColor(1, "GRAPHITE"),
             new VehicleColor(2, "BLACK_STEEL"),
@@ -192,11 +192,11 @@ namespace vMenuClient.data
             new VehicleColor(146, "VERY_DARK_BLUE"),
             new VehicleColor(147, "BLACK_GRAPHITE"),
 
-            new VehicleColor(150, "LAVA_RED"),
-        };
+            new VehicleColor(150, "LAVA_RED")
+        ];
 
-        public static readonly List<VehicleColor> MatteColors = new()
-        {
+        public static readonly List<VehicleColor> MatteColors =
+        [
             new VehicleColor(12, "BLACK"),
             new VehicleColor(13, "GREY"),
             new VehicleColor(14, "LIGHT_GREY"),
@@ -221,21 +221,21 @@ namespace vMenuClient.data
             new VehicleColor(152, "MATTE_OD"),
             new VehicleColor(153, "MATTE_DIRT"),
             new VehicleColor(154, "MATTE_DESERT"),
-            new VehicleColor(155, "MATTE_FOIL"),
-        };
+            new VehicleColor(155, "MATTE_FOIL")
+        ];
 
-        public static readonly List<VehicleColor> MetalColors = new()
-        {
+        public static readonly List<VehicleColor> MetalColors =
+        [
             new VehicleColor(117, "BR_STEEL"),
             new VehicleColor(118, "BR BLACK_STEEL"),
             new VehicleColor(119, "BR_ALUMINIUM"),
 
             new VehicleColor(158, "GOLD_P"),
-            new VehicleColor(159, "GOLD_S"),
-        };
+            new VehicleColor(159, "GOLD_S")
+        ];
 
-        public static readonly List<VehicleColor> UtilColors = new()
-        {
+        public static readonly List<VehicleColor> UtilColors =
+        [
             new VehicleColor(15, "BLACK"),
             new VehicleColor(16, "FMMC_COL1_1"),
             new VehicleColor(17, "DARK_SILVER"),
@@ -280,10 +280,10 @@ namespace vMenuClient.data
             new VehicleColor(157, "LIGHT_BLUE"),
 
             new VehicleColor(160, "YELLOW")
-        };
+        ];
 
-        public static readonly List<VehicleColor> WornColors = new()
-        {
+        public static readonly List<VehicleColor> WornColors =
+        [
             new VehicleColor(21, "BLACK"),
             new VehicleColor(22, "GRAPHITE"),
             new VehicleColor(23, "LIGHT_GREY"),
@@ -319,12 +319,12 @@ namespace vMenuClient.data
             new VehicleColor(130, "ORANGE"),
             new VehicleColor(131, "WHITE"),
             new VehicleColor(132, "FROST_WHITE"),
-            new VehicleColor(133, "OLIVE_GREEN"),
-        };
+            new VehicleColor(133, "OLIVE_GREEN")
+        ];
 
         // Chameleon Colour List //
-        public static readonly List<VehicleColor> ChameleonColors = new()
-        {
+        public static readonly List<VehicleColor> ChameleonColors =
+        [
             new VehicleColor(223, "G9_PAINT01"),
             new VehicleColor(224, "G9_PAINT02"),
             new VehicleColor(225, "G9_PAINT03"),
@@ -340,16 +340,16 @@ namespace vMenuClient.data
             new VehicleColor(235, "G9_PAINT13"),
             new VehicleColor(236, "G9_PAINT14"),
             new VehicleColor(237, "G9_PAINT15"),
-            new VehicleColor(238, "G9_PAINT16"),
-        };
+            new VehicleColor(238, "G9_PAINT16")
+        ];
 
         public static class Vehicles
         {
             #region Vehicle List Per Class
 
             #region Compacts
-            public static List<string> Compacts { get; } = new List<string>()
-            {
+            public static List<string> Compacts { get; } =
+            [
                 "ASBO", // CASINO HEIST (MPHEIST3) DLC - Requires b2060
                 "BLISTA",
                 "BRIOSO",
@@ -367,12 +367,12 @@ namespace vMenuClient.data
                 "PANTO",
                 "PRAIRIE",
                 "RHAPSODY",
-                "WEEVIL", // CAYO PERICO (MPHEIST4) DLC - Requires b2189
-            };
+                "WEEVIL" // CAYO PERICO (MPHEIST4) DLC - Requires b2189
+            ];
             #endregion
             #region Sedans
-            public static List<string> Sedans { get; } = new List<string>()
-            {
+            public static List<string> Sedans { get; } =
+            [
                 "ASEA",
                 "ASEA2",
                 "ASTEROPE",
@@ -419,12 +419,12 @@ namespace vMenuClient.data
                 "VORSCHLAGHAMMER", // BOTTOM DOLLAR BOUNTIES (MP2024_01) DLC - Requires b3258
                 "WARRENER",
                 "WARRENER2", // LS TUNERS (MPTUNER) DLC - Requires b2372
-                "WASHINGTON",
-            };
+                "WASHINGTON"
+            ];
             #endregion
             #region SUVs
-            public static List<string> SUVs { get; } = new List<string>()
-            {
+            public static List<string> SUVs { get; } =
+            [
                 "ALEUTIAN", // CHOP SHOP (MP2023_02) DLC - Requires b3095
                 "ASTRON", // THE CONTRACT (MPSECURITY) DLC - Requires b2545
                 "BALLER",
@@ -472,12 +472,12 @@ namespace vMenuClient.data
                 "VIVANITE", // CHOP SHOP (MP2023_02) DLC - Requires b3095
                 "WOODLANDER", // MONEY FRONTS (MP2025_01) DLC - Requires b3570
                 "XLS",
-                "XLS2",
-            };
+                "XLS2"
+            ];
             #endregion
             #region Coupes
-            public static List<string> Coupes { get; } = new List<string>()
-            {
+            public static List<string> Coupes { get; } =
+            [
                 "COGCABRIO",
                 "DRIFTFR36", // CHOP SHOP (MP2023_02) DLC - Requires b3095
                 "EUROSX32", // BOTTOM DOLLAR BOUNTIES (MP2024_01) DLC - Requires b3258
@@ -497,12 +497,12 @@ namespace vMenuClient.data
                 "WINDSOR",
                 "WINDSOR2",
                 "ZION",
-                "ZION2",
-            };
+                "ZION2"
+            ];
             #endregion
             #region Muscle
-            public static List<string> Muscle { get; } = new List<string>()
-            {
+            public static List<string> Muscle { get; } =
+            [
                 "BLADE",
                 "BRIGHAM", // SA MERCENARIES (MP2023_01) DLC - Requires b2944
                 "BROADWAY", // DRUG WARS (MPCHRISTMAS3) DLC - Requires b2802
@@ -595,12 +595,12 @@ namespace vMenuClient.data
                 "VOODOO2",
                 "WEEVIL2", // CRIMINAL ENTERPRISES (MPSUM2) DLC - Requires b2699
                 "YOSEMITE",
-                "YOSEMITE2", // CASINO HEIST (MPHEIST3) DLC - Requires b2060
-            };
+                "YOSEMITE2" // CASINO HEIST (MPHEIST3) DLC - Requires b2060
+            ];
             #endregion
             #region SportsClassics
-            public static List<string> SportsClassics { get; } = new List<string>()
-            {
+            public static List<string> SportsClassics { get; } =
+            [
                 "ARDENT",
                 "BTYPE",
                 "BTYPE2",
@@ -652,12 +652,12 @@ namespace vMenuClient.data
                 "VISERIS",
                 "Z190",
                 "ZION3", // CASINO AND RESORT (MPVINEWOOD) DLC - Requires b2060
-                "ZTYPE",
-            };
+                "ZTYPE"
+            ];
             #endregion
             #region Sports
-            public static List<string> Sports { get; } = new List<string>()
-            {
+            public static List<string> Sports { get; } =
+            [
                 "ALPHA",
                 "BANSHEE",
                 "BANSHEE3", // AGENTS OF SABOTAGE (MP2024_02) DLC - Requires b3407
@@ -778,12 +778,12 @@ namespace vMenuClient.data
                 "ZR350", // LS TUNERS (MPTUNER) DLC - Requires b2372
                 "ZR380",
                 "ZR3802",
-                "ZR3803",
-            };
+                "ZR3803"
+            ];
             #endregion
             #region Super
-            public static List<string> Super { get; } = new List<string>()
-            {
+            public static List<string> Super { get; } =
+            [
                 "ADDER",
                 "AUTARCH",
                 "BANSHEE2",
@@ -841,12 +841,12 @@ namespace vMenuClient.data
                 "XA21",
                 "ZENO", // THE CONTRACT (MPSECURITY) DLC - Requires b2545
                 "ZENTORNO",
-                "ZORRUSSO", // CASINO AND RESORT (MPVINEWOOD) DLC - Requires b2060
-            };
+                "ZORRUSSO" // CASINO AND RESORT (MPVINEWOOD) DLC - Requires b2060
+            ];
             #endregion
             #region Motorcycles
-            public static List<string> Motorcycles { get; } = new List<string>()
-            {
+            public static List<string> Motorcycles { get; } =
+            [
                 "AKUMA",
                 "AVARUS",
                 "BAGGER",
@@ -905,12 +905,12 @@ namespace vMenuClient.data
                 "VORTEX",
                 "WOLFSBANE",
                 "ZOMBIEA",
-                "ZOMBIEB",
-            };
+                "ZOMBIEB"
+            ];
             #endregion
             #region OffRoad
-            public static List<string> OffRoad { get; } = new List<string>()
-            {
+            public static List<string> OffRoad { get; } =
+            [
                 "BFINJECTION",
                 "BIFTA",
                 "BLAZER",
@@ -980,12 +980,12 @@ namespace vMenuClient.data
                 "WINKY", // CAYO PERICO (MPHEIST4) DLC - Requires b2189
                 "YOSEMITE1500", // BOTTOM DOLLAR BOUNTIES (MP2024_01) DLC - Requires b3258
                 "YOSEMITE3", // SUMMER SPECIAL (MPSUM) DLC - Requires b2060
-                "ZHABA", // CASINO HEIST (MPHEIST3) DLC - Requires b2060
-            };
+                "ZHABA" // CASINO HEIST (MPHEIST3) DLC - Requires b2060
+            ];
             #endregion
             #region Industrial
-            public static List<string> Industrial { get; } = new List<string>()
-            {
+            public static List<string> Industrial { get; } =
+            [
                 "BULLDOZER",
                 "CUTTER",
                 "DUMP",
@@ -997,12 +997,12 @@ namespace vMenuClient.data
                 "MIXER2",
                 "RUBBLE",
                 "TIPTRUCK",
-                "TIPTRUCK2",
-            };
+                "TIPTRUCK2"
+            ];
             #endregion
             #region Utility
-            public static List<string> Utility { get; } = new List<string>()
-            {
+            public static List<string> Utility { get; } =
+            [
                 "AIRTUG",
                 "CADDY",
                 "CADDY2",
@@ -1034,7 +1034,7 @@ namespace vMenuClient.data
                 "FREIGHTTRAILER", // Extended
                 "ARMYTANKER", // Army Tanker
                 "TRAILERLARGE", // Mobile Operations Center
-            
+
                 /// Large Trailers
                 "DOCKTRAILER", // Shipping Container Trailer
                 "TR3", // Large Boat Trailer (Sailboat)
@@ -1051,11 +1051,11 @@ namespace vMenuClient.data
                 "TRAILERLOGS", // Logs Trailer
                 "TANKER", // Ron Oil Tanker Trailer
                 "TANKER2", // Ron Oil Tanker Trailer (Heist Version)
-            
+
                 /// Medium Trailers
                 "BALETRAILER", // (Tractor Hay Bale Trailer)
                 "GRAINTRAILER", // (Tractor Grain Trailer)
-            
+
                 // Ortega's trailer, we don't want this one because you can't drive them.
                 //"PROPTRAILER",
 
@@ -1064,12 +1064,12 @@ namespace vMenuClient.data
                 "BOATTRAILER2", // CHOP SHOP (MP2023_02) DLC - Requires b3095
                 "BOATTRAILER3", // CHOP SHOP (MP2023_02) DLC - Requires b3095
                 "RAKETRAILER", // Tractor Tow Plow/Rake
-                "TRAILERSMALL", // Small Utility Trailer
-            };
+                "TRAILERSMALL" // Small Utility Trailer
+            ];
             #endregion
             #region Vans
-            public static List<string> Vans { get; } = new List<string>()
-            {
+            public static List<string> Vans { get; } =
+            [
                 "BISON",
                 "BISON2",
                 "BISON3",
@@ -1110,12 +1110,12 @@ namespace vMenuClient.data
                 "YOUGA2",
                 "YOUGA3", // SUMMER SPECIAL (MPSUM) DLC - Requires b2060
                 "YOUGA4", // THE CONTRACT (MPSECURITY) DLC - Requires b2545
-                "YOUGA5", // AGENTS OF SABOTAGE (MP2024_02) DLC - Requires b3407
-            };
+                "YOUGA5" // AGENTS OF SABOTAGE (MP2024_02) DLC - Requires b3407
+            ];
             #endregion
             #region Cycles
-            public static List<string> Cycles { get; } = new List<string>()
-            {
+            public static List<string> Cycles { get; } =
+            [
                 "BMX",
                 "CRUISER",
                 "FIXTER",
@@ -1124,12 +1124,12 @@ namespace vMenuClient.data
                 "SCORCHER",
                 "TRIBIKE",
                 "TRIBIKE2",
-                "TRIBIKE3",
-            };
+                "TRIBIKE3"
+            ];
             #endregion
             #region Boats
-            public static List<string> Boats { get; } = new List<string>()
-            {
+            public static List<string> Boats { get; } =
+            [
                 "AVISA", // CAYO PERICO (MPHEIST4) DLC - Requires b2189
                 "DINGHY",
                 "DINGHY2",
@@ -1155,12 +1155,12 @@ namespace vMenuClient.data
                 "TORO2",
                 "TROPIC",
                 "TROPIC2",
-                "TUG",
-            };
+                "TUG"
+            ];
             #endregion
             #region Helicopters
-            public static List<string> Helicopters { get; } = new List<string>()
-            {
+            public static List<string> Helicopters { get; } =
+            [
                 "AKULA",
                 "ANNIHILATOR",
                 "ANNIHILATOR2", // CAYO PERICO (MPHEIST4) DLC - Requires b2189
@@ -1191,12 +1191,12 @@ namespace vMenuClient.data
                 "SWIFT2",
                 "VALKYRIE",
                 "VALKYRIE2",
-                "VOLATUS",
-            };
+                "VOLATUS"
+            ];
             #endregion
             #region Planes
-            public static List<string> Planes { get; } = new List<string>()
-            {
+            public static List<string> Planes { get; } =
+            [
                 "ALKONOST", // CAYO PERICO (MPHEIST4) DLC - Requires b2189
                 "ALPHAZ1",
                 "AVENGER",
@@ -1242,12 +1242,12 @@ namespace vMenuClient.data
                 "VELUM",
                 "VELUM2",
                 "VESTRA",
-                "VOLATOL",
-            };
+                "VOLATOL"
+            ];
             #endregion
             #region Service
-            public static List<string> Service { get; } = new List<string>()
-            {
+            public static List<string> Service { get; } =
+            [
                 "AIRBUS",
                 "BRICKADE",
                 "BRICKADE2", // DRUG WARS (MPCHRISTMAS3) DLC - Requires b2802
@@ -1260,12 +1260,12 @@ namespace vMenuClient.data
                 "TOURBUS",
                 "TRASH",
                 "TRASH2",
-                "WASTELANDER",
-            };
+                "WASTELANDER"
+            ];
             #endregion
             #region Emergency
-            public static List<string> Emergency { get; } = new List<string>()
-            {
+            public static List<string> Emergency { get; } =
+            [
                 "AMBULANCE",
                 "FBI",
                 "FBI2",
@@ -1299,12 +1299,12 @@ namespace vMenuClient.data
                 "RIOT",
                 "RIOT2",
                 "SHERIFF",
-                "SHERIFF2",
-            };
+                "SHERIFF2"
+            ];
             #endregion
             #region Military
-            public static List<string> Military { get; } = new List<string>()
-            {
+            public static List<string> Military { get; } =
+            [
                 "APC",
                 "BARRACKS",
                 "BARRACKS2",
@@ -1321,12 +1321,12 @@ namespace vMenuClient.data
                 "SCARAB3",
                 "THRUSTER", // Jetpack
                 "TRAILERSMALL2", // Anti Aircraft Trailer
-                "VETIR", // CAYO PERICO (MPHEIST4) DLC - Requires b2189
-            };
+                "VETIR" // CAYO PERICO (MPHEIST4) DLC - Requires b2189
+            ];
             #endregion
             #region Commercial
-            public static List<string> Commercial { get; } = new List<string>()
-            {
+            public static List<string> Commercial { get; } =
+            [
                 "BENSON",
                 "BENSON2", // CHOP SHOP (MP2023_02) DLC - Requires b3095
                 "BIFF",
@@ -1350,12 +1350,12 @@ namespace vMenuClient.data
                 "STOCKADE",
                 "STOCKADE3",
                 "STOCKADE4", // MONEY FRONTS (MP2025_01) DLC - Requires b3570
-                "TERBYTE",
-            };
+                "TERBYTE"
+            ];
             #endregion
             #region Trains
-            public static List<string> Trains { get; } = new List<string>()
-            {
+            public static List<string> Trains { get; } =
+            [
                 "CABLECAR",
                 "FREIGHT",
                 "FREIGHT2", // CHOP SHOP (MP2023_02) DLC - Requires b3095
@@ -1365,26 +1365,26 @@ namespace vMenuClient.data
                 "FREIGHTCONT2",
                 "FREIGHTGRAIN",
                 "METROTRAIN",
-                "TANKERCAR",
-            };
+                "TANKERCAR"
+            ];
             #endregion
             #region OpenWheel
-            public static List<string> OpenWheel { get; } = new List<string>()
-            {
+            public static List<string> OpenWheel { get; } =
+            [
                 "FORMULA",
                 "FORMULA2",
                 "OPENWHEEL1", // SUMMER SPECIAL (MPSUM) DLC - Requires b2060
-                "OPENWHEEL2", // SUMMER SPECIAL (MPSUM) DLC - Requires b2060
-            };
+                "OPENWHEEL2" // SUMMER SPECIAL (MPSUM) DLC - Requires b2060
+            ];
             #endregion
 
             #region Addon Vehicles
             public static void ProcessAddonVehicles(List<string> addonNames)
             {
-                foreach (string addon in addonNames)
+                foreach (var addon in addonNames)
                 {
-                    uint modelHash = (uint)GetHashKey(addon);
-                    int vehicleClass = GetVehicleClassFromName(modelHash);
+                    var modelHash = (uint)GetHashKey(addon);
+                    var vehicleClass = GetVehicleClassFromName(modelHash);
 
                     switch (vehicleClass)
                     {

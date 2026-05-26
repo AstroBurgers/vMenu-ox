@@ -119,7 +119,7 @@ namespace vMenuClient
             }
             #endregion
             #region keymapping
-            string KeyMappingID = GetKeyMappingId();
+            var KeyMappingID = GetKeyMappingId();
             RegisterCommand($"vMenu:{KeyMappingID}:NoClip", new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
             {
                 if (IsAllowed(Permission.NoClip))
@@ -341,7 +341,7 @@ namespace vMenuClient
         }
 
         private static Dictionary<long, RPCData> rpcQueue = new Dictionary<long, RPCData>();
-        private static long rpcIdCounter = 0;
+        private static long rpcIdCounter;
 
         [EventHandler("vMenu:GetPlayerCoords:reply")]
         public static void PlayerCoordinatesReceived(long rpcId, Vector3 coords)
@@ -361,7 +361,7 @@ namespace vMenuClient
 
         public static async Task<Vector3> RequestPlayerCoordinates(int serverId)
         {
-            long rpcId = rpcIdCounter++;
+            var rpcId = rpcIdCounter++;
             rpcQueue.Add(rpcId, new RPCData { IsCompleted = false, Coords = Vector3.Zero });
 
             TriggerServerEvent("vMenu:GetPlayerCoords", rpcId, serverId);
@@ -371,7 +371,7 @@ namespace vMenuClient
                 await Delay(0);
             }
 
-            Vector3 coords = rpcQueue[rpcId].Coords;
+            var coords = rpcQueue[rpcId].Coords;
             rpcQueue.Remove(rpcId);
 
             return coords;
@@ -387,8 +387,8 @@ namespace vMenuClient
         {
             vMenuShared.PermissionsManager.SetPermissions(permissionsList);
 
-            VehicleSpawner.allowedCategories = new List<bool>()
-            {
+            VehicleSpawner.allowedCategories =
+            [
                 IsAllowed(Permission.VSCompacts, checkAnyway: true),
                 IsAllowed(Permission.VSSedans, checkAnyway: true),
                 IsAllowed(Permission.VSSUVs, checkAnyway: true),
@@ -412,7 +412,7 @@ namespace vMenuClient
                 IsAllowed(Permission.VSCommercial, checkAnyway: true),
                 IsAllowed(Permission.VSTrains, checkAnyway: true),
                 IsAllowed(Permission.VSOpenWheel, checkAnyway: true)
-            };
+            ];
             ArePermissionsSetup = true;
             while (!ConfigOptionsSetupComplete)
             {

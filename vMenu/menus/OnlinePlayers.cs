@@ -212,42 +212,44 @@ namespace vMenuClient.menus
                         PlayersWaypointList.Clear();
                     }
 
-                    if (!selectedPedRouteAlreadyActive)
+                    if (selectedPedRouteAlreadyActive)
                     {
-                        if (currentPlayer.ServerId != Game.Player.ServerId)
+                        return;
+                    }
+
+                    if (currentPlayer.ServerId != Game.Player.ServerId)
+                    {
+                        int blip;
+
+                        if (currentPlayer.IsActive && currentPlayer.Character != null)
                         {
-                            int blip;
-
-                            if (currentPlayer.IsActive && currentPlayer.Character != null)
+                            var ped = GetPlayerPed(currentPlayer.Handle);
+                            blip = GetBlipFromEntity(ped);
+                            if (!DoesBlipExist(blip))
                             {
-                                var ped = GetPlayerPed(currentPlayer.Handle);
-                                blip = GetBlipFromEntity(ped);
-                                if (!DoesBlipExist(blip))
-                                {
-                                    blip = AddBlipForEntity(ped);
-                                }
+                                blip = AddBlipForEntity(ped);
                             }
-                            else
-                            {
-                                if (!PlayerCoordWaypoints.TryGetValue(currentPlayer.ServerId, out blip))
-                                {
-                                    var coords = await MainMenu.RequestPlayerCoordinates(currentPlayer.ServerId);
-                                    blip = AddBlipForCoord(coords.X, coords.Y, coords.Z);
-                                    PlayerCoordWaypoints[currentPlayer.ServerId] = blip;
-                                }
-                            }
-
-                            SetBlipColour(blip, 58);
-                            SetBlipRouteColour(blip, 58);
-                            SetBlipRoute(blip, true);
-
-                            PlayersWaypointList.Add(currentPlayer.ServerId);
-                            Notify.Custom($"~g~GPS route to ~s~<C>{GetSafePlayerName(currentPlayer.Name)}</C>~g~ is now active, press the ~s~Toggle GPS Route~g~ button again to disable the route.");
                         }
                         else
                         {
-                            Notify.Error("You cannot set a waypoint to yourself.");
+                            if (!PlayerCoordWaypoints.TryGetValue(currentPlayer.ServerId, out blip))
+                            {
+                                var coords = await MainMenu.RequestPlayerCoordinates(currentPlayer.ServerId);
+                                blip = AddBlipForCoord(coords.X, coords.Y, coords.Z);
+                                PlayerCoordWaypoints[currentPlayer.ServerId] = blip;
+                            }
                         }
+
+                        SetBlipColour(blip, 58);
+                        SetBlipRouteColour(blip, 58);
+                        SetBlipRoute(blip, true);
+
+                        PlayersWaypointList.Add(currentPlayer.ServerId);
+                        Notify.Custom($"~g~GPS route to ~s~<C>{GetSafePlayerName(currentPlayer.Name)}</C>~g~ is now active, press the ~s~Toggle GPS Route~g~ button again to disable the route.");
+                    }
+                    else
+                    {
+                        Notify.Error("You cannot set a waypoint to yourself.");
                     }
                 }
                 else if (item == printIdentifiers)

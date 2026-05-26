@@ -20,8 +20,8 @@ namespace vMenuClient.menus
         public MenuCheckboxItem blackout;
         public MenuCheckboxItem vehicleBlackout;
         public MenuCheckboxItem snowEnabled;
-        public static readonly List<string> weatherTypes = new()
-        {
+        public static readonly List<string> weatherTypes =
+        [
             "EXTRASUNNY",
             "CLEAR",
             "NEUTRAL",
@@ -37,7 +37,7 @@ namespace vMenuClient.menus
             "SNOWLIGHT",
             "XMAS",
             "HALLOWEEN"
-        };
+        ];
         
         private void CreateMenu()
         {
@@ -120,7 +120,7 @@ namespace vMenuClient.menus
                 }
                 else if (item.ItemData is string weatherType)
                 {
-                    bool confirmed = await GetUserConfirmation("Change Weather", $"Please confirm that you want to change the weather to: **{item.Text}**");
+                    var confirmed = await GetUserConfirmation("Change Weather", $"Please confirm that you want to change the weather to: **{item.Text}**");
                     if (confirmed)
                     {
                         Notify.Custom($"The weather will be changed to ~y~{item.Text}~s~. This will take {EventManager.WeatherChangeTime} seconds.");
@@ -138,8 +138,8 @@ namespace vMenuClient.menus
                 }
                 else if (item == blackout)
                 {
-                    string action = _checked ? "Enable" : "Disable";
-                    bool confirmed = await GetUserConfirmation($"{action} Blackout Mode", $"Please confirm that you want to {action} blackout mode. This will disable or enable all lights across the map.");
+                    var action = _checked ? "Enable" : "Disable";
+                    var confirmed = await GetUserConfirmation($"{action} Blackout Mode", $"Please confirm that you want to {action} blackout mode. This will disable or enable all lights across the map.");
                     if (confirmed)
                     {
                         Notify.Custom($"Blackout mode is now {(_checked ? "~g~enabled" : "~r~disabled")}~s~.");
@@ -152,8 +152,8 @@ namespace vMenuClient.menus
                 }
                 else if (item == snowEnabled)
                 {
-                    string action = _checked ? "Enable" : "Disable";
-                    bool confirmed = await GetUserConfirmation($"{action} Snow Effects", $"Please confirm that you want to {action} snow effects. This will force snow to appear on the ground and enable snow particle effects for peds and vehicles.");
+                    var action = _checked ? "Enable" : "Disable";
+                    var confirmed = await GetUserConfirmation($"{action} Snow Effects", $"Please confirm that you want to {action} snow effects. This will force snow to appear on the ground and enable snow particle effects for peds and vehicles.");
                     if (confirmed)
                     {
                         Notify.Custom($"Snow effects will now be forced {(_checked ? "~g~enabled" : "~r~disabled")}~s~.");

@@ -24,16 +24,16 @@ namespace vMenuClient.menus
         private readonly Menu selectedVehicleMenu = new("Manage Vehicle", "Manage this saved vehicle.");
         private readonly Menu unavailableVehiclesMenu = new("Missing Vehicles", "Unavailable Saved Vehicles");
         private Dictionary<string, VehicleInfo> savedVehicles = new();
-        private readonly List<Menu> subMenus = new();
-        private KeyValuePair<string, VehicleInfo> currentlySelectedVehicle = new();
-        private int deleteButtonPressedCount = 0;
-        private int replaceButtonPressedCount = 0;
+        private readonly List<Menu> subMenus = [];
+        private KeyValuePair<string, VehicleInfo> currentlySelectedVehicle;
+        private int deleteButtonPressedCount;
+        private int replaceButtonPressedCount;
         private SavedVehicleCategory currentCategory;
 
         public static bool vehicleCodesEnabled = GetSettingsBool(Setting.vmenu_vehicle_codes);
 
         // Need to be editable from other functions
-        private readonly MenuListItem setCategoryBtn = new("Set Vehicle Category", new List<string> { }, 0, "Sets this Vehicle's category. Select to save.");
+        private readonly MenuListItem setCategoryBtn = new("Set Vehicle Category", [], 0, "Sets this Vehicle's category. Select to save.");
 
         /// <summary>
         /// Creates the menu.
@@ -125,7 +125,7 @@ namespace vMenuClient.menus
                     currentCategory = item.ItemData;
                 }
 
-                bool isUncategorized = currentCategory.Name == "Uncategorized";
+                var isUncategorized = currentCategory.Name == "Uncategorized";
 
                 savedVehiclesCategoryMenu.MenuTitle = currentCategory.Name;
                 savedVehiclesCategoryMenu.MenuSubtitle = $"~s~Category: ~y~{currentCategory.Name}";
@@ -135,8 +135,8 @@ namespace vMenuClient.menus
 
                 string ChangeCallback(MenuDynamicListItem item, bool left)
                 {
-                    int currentIndex = iconNames.IndexOf(item.CurrentItem);
-                    int newIndex = left ? currentIndex - 1 : currentIndex + 1;
+                    var currentIndex = iconNames.IndexOf(item.CurrentItem);
+                    var newIndex = left ? currentIndex - 1 : currentIndex + 1;
 
                     // If going past the start or end of the list
                     if (iconNames.ElementAtOrDefault(newIndex) == default)
@@ -195,8 +195,8 @@ namespace vMenuClient.menus
 
                     foreach (var kvp in savedVehicles)
                     {
-                        string name = kvp.Key;
-                        VehicleInfo vehicle = kvp.Value;
+                        var name = kvp.Key;
+                        var vehicle = kvp.Value;
 
                         if (string.IsNullOrEmpty(vehicle.Category))
                         {
@@ -213,9 +213,9 @@ namespace vMenuClient.menus
                             }
                         }
 
-                        string buttonName = name.Substring(4);
-                        bool canUse = IsModelInCdimage(vehicle.model);
-                        string buttonDescription = "Manage this saved vehicle.";
+                        var buttonName = name.Substring(4);
+                        var canUse = IsModelInCdimage(vehicle.model);
+                        var buttonDescription = "Manage this saved vehicle.";
 
                         if (!canUse)
                         {
@@ -241,7 +241,7 @@ namespace vMenuClient.menus
                     }
 
                     // Menu order: Category buttons -> Spawnable vehs -> Unspawnable vehs
-                    foreach (MenuItem menuItem in spawnableVehicles.Concat(unspawnableVehicles))
+                    foreach (var menuItem in spawnableVehicles.Concat(unspawnableVehicles))
                     {
                         savedVehiclesCategoryMenu.AddMenuItem(menuItem);
                     }
@@ -267,7 +267,7 @@ namespace vMenuClient.menus
                             return;
                         }
 
-                        string oldName = currentCategory.Name;
+                        var oldName = currentCategory.Name;
 
                         currentCategory.Name = name;
 
@@ -275,15 +275,15 @@ namespace vMenuClient.menus
                         {
                             StorageManager.DeleteSavedStorageItem("saved_veh_category_" + oldName);
 
-                            int totalCount = 0;
-                            int updatedCount = 0;
+                            var totalCount = 0;
+                            var updatedCount = 0;
 
                             if (savedVehicles.Count > 0)
                             {
                                 foreach (var kvp in savedVehicles)
                                 {
-                                    string saveName = kvp.Key;
-                                    VehicleInfo vehicle = kvp.Value;
+                                    var saveName = kvp.Key;
+                                    var vehicle = kvp.Value;
 
                                     if (string.IsNullOrEmpty(vehicle.Category))
                                     {
@@ -345,20 +345,20 @@ namespace vMenuClient.menus
                     case 3:
                         if (item.Label == "Are you sure?")
                         {
-                            bool deleteVehicles = (sender.GetMenuItems().ElementAt(4) as MenuCheckboxItem).Checked;
+                            var deleteVehicles = (sender.GetMenuItems().ElementAt(4) as MenuCheckboxItem).Checked;
 
                             item.Label = "";
                             DeleteResourceKvp("saved_veh_category_" + currentCategory.Name);
 
-                            int totalCount = 0;
-                            int updatedCount = 0;
+                            var totalCount = 0;
+                            var updatedCount = 0;
 
                             if (savedVehicles.Count > 0)
                             {
                                 foreach (var kvp in savedVehicles)
                                 {
-                                    string saveName = kvp.Key;
-                                    VehicleInfo vehicle = kvp.Value;
+                                    var saveName = kvp.Key;
+                                    var vehicle = kvp.Value;
 
                                     if (string.IsNullOrEmpty(vehicle.Category))
                                     {
@@ -408,9 +408,9 @@ namespace vMenuClient.menus
 
                     // Load saved vehicle menu
                     default:
-                        List<string> categoryNames = GetAllCategoryNames();
-                        List<MenuItem.Icon> categoryIcons = GetCategoryIcons(categoryNames);
-                        int nameIndex = categoryNames.IndexOf(currentCategory.Name);
+                        var categoryNames = GetAllCategoryNames();
+                        var categoryIcons = GetCategoryIcons(categoryNames);
+                        var nameIndex = categoryNames.IndexOf(currentCategory.Name);
 
                         setCategoryBtn.ItemData = categoryIcons;
                         setCategoryBtn.ListItems = categoryNames;
@@ -431,7 +431,7 @@ namespace vMenuClient.menus
             savedVehiclesCategoryMenu.OnDynamicListItemSelect += (_, _, currentItem) =>
             {
                 var iconNames = Enum.GetNames(typeof(MenuItem.Icon)).ToList();
-                int iconIndex = iconNames.IndexOf(currentItem);
+                var iconIndex = iconNames.IndexOf(currentItem);
 
                 currentCategory.Icon = (MenuItem.Icon)iconIndex;
 
@@ -468,7 +468,7 @@ namespace vMenuClient.menus
 
             selectedVehicleMenu.OnMenuOpen += (sender) =>
             {
-                bool vehicleModelExists = IsModelInCdimage(currentlySelectedVehicle.Value.model);
+                var vehicleModelExists = IsModelInCdimage(currentlySelectedVehicle.Value.model);
 
                 spawnVehicle.Enabled = vehicleModelExists;
                 spawnVehicle.Description = vehicleModelExists ? "Spawn this saved vehicle." : "This model could not be found in the game files.";
@@ -500,7 +500,7 @@ namespace vMenuClient.menus
                 }
                 else if (item == renameVehicle)
                 {
-                    string currentlySelectedVehicleSaveName = currentlySelectedVehicle.Key.Substring(4); // gets rid of the veh_ prefix used to store in KVP
+                    var currentlySelectedVehicleSaveName = currentlySelectedVehicle.Key.Substring(4); // gets rid of the veh_ prefix used to store in KVP
                     var newName = await GetUserInput(windowTitle: "Enter a new name for this vehicle.", defaultText: currentlySelectedVehicleSaveName);
                     if (string.IsNullOrEmpty(newName))
                     {
@@ -529,7 +529,7 @@ namespace vMenuClient.menus
                 else if (item == generateVehicleCode)
                 {
 
-                    string currentlySelectedVehicleSaveName = currentlySelectedVehicle.Key.Substring(4); // gets rid of the veh_ prefix used to store in KVP
+                    var currentlySelectedVehicleSaveName = currentlySelectedVehicle.Key.Substring(4); // gets rid of the veh_ prefix used to store in KVP
                     TriggerEvent("vMenu:Vehicles:GenerateCode", currentlySelectedVehicleSaveName);
                 }
                 else if (item == replaceVehicle)
@@ -592,7 +592,7 @@ namespace vMenuClient.menus
             // Update vehicle's category
             selectedVehicleMenu.OnListItemSelect += async (_, listItem, listIndex, _) =>
             {
-                string name = listItem.ListItems[listIndex];
+                var name = listItem.ListItems[listIndex];
 
                 if (name == "Create New")
                 {
@@ -630,7 +630,7 @@ namespace vMenuClient.menus
                     }
                 }
 
-                VehicleInfo vehicle = currentlySelectedVehicle.Value;
+                var vehicle = currentlySelectedVehicle.Value;
 
                 vehicle.Category = name;
 
@@ -750,7 +750,7 @@ namespace vMenuClient.menus
                 }
                 else if (item == loadVehicleButton)
                 {
-                    bool success = await LoadSharedVehicle();
+                    var success = await LoadSharedVehicle();
                 }
                 else if (item == classButton)
                 {
@@ -774,8 +774,8 @@ namespace vMenuClient.menus
         private bool UpdateSelectedVehicleMenu(MenuItem selectedItem, Menu parentMenu = null)
         {
             var vehInfo = selectedItem.ItemData;
-            List<string> categoryNames = GetAllCategoryNames();
-            List<MenuItem.Icon> categoryIcons = GetCategoryIcons(categoryNames);
+            var categoryNames = GetAllCategoryNames();
+            var categoryIcons = GetCategoryIcons(categoryNames);
             setCategoryBtn.ItemData = categoryIcons;
             setCategoryBtn.ListItems = categoryNames;
             setCategoryBtn.ListIndex = 0;
@@ -919,7 +919,7 @@ namespace vMenuClient.menus
                 categories.Sort((a, b) => a.ToLower().CompareTo(b.ToLower()));
                 foreach (var item in categories)
                 {
-                    SavedVehicleCategory category = StorageManager.GetSavedVehicleCategoryData("saved_veh_category_" + item);
+                    var category = StorageManager.GetSavedVehicleCategoryData("saved_veh_category_" + item);
 
                     var btn = new MenuItem(category.Name, category.Description)
                     {
@@ -961,7 +961,7 @@ namespace vMenuClient.menus
 
         private List<MenuItem.Icon> GetCategoryIcons(List<string> categoryNames)
         {
-            List<MenuItem.Icon> icons = new List<MenuItem.Icon> { };
+            List<MenuItem.Icon> icons = [];
 
             foreach (var name in categoryNames)
             {

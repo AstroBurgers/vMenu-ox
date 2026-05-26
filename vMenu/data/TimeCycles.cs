@@ -4,8 +4,8 @@ namespace vMenuClient.data
 {
     public static class TimeCycles
     {
-        public static List<string> Timecycles = new()
-        {
+        public static List<string> Timecycles =
+        [
             "AmbientPUSH",
             "AP1_01_B_IntRefRange",
             "AP1_01_C_NoFog",
@@ -736,6 +736,6 @@ namespace vMenuClient.data
             "winning_room",
             "yacht_DLC",
             "yell_tunnel_nodirect"
-        };
+        ];
     }
 }

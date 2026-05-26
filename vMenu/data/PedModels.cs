@@ -6,8 +6,8 @@ namespace vMenuClient.data
 {
     public static class PedModels
     {
-        public static List<uint> AnimalHashes = new()
-        {
+        public static List<uint> AnimalHashes =
+        [
             (uint)GetHashKey("a_c_boar"),
             (uint)GetHashKey("a_c_boar_02"), // mp2023_01
             (uint)GetHashKey("a_c_cat_01"),
@@ -50,6 +50,6 @@ namespace vMenuClient.data
             (uint)GetHashKey("a_c_shepherd"),
             (uint)GetHashKey("a_c_stingray"),
             (uint)GetHashKey("a_c_westy")
-        };
+        ];
     }
 }

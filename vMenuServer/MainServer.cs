@@ -142,10 +142,10 @@ namespace vMenuServer
         {
             get { return Math.Max(GetSettingsInt(Setting.vmenu_dynamic_weather_timer), 1); }
         }
-        private long lastWeatherChange = 0;
+        private long lastWeatherChange;
 
-        private readonly List<string> CloudTypes = new()
-        {
+        private readonly List<string> CloudTypes =
+        [
             "Cloudy 01",
             "RAIN",
             "horizonband1",
@@ -165,10 +165,10 @@ namespace vMenuServer
             "horizonband3",
             "Stripey",
             "horsey",
-            "shower",
-        };
-        private readonly List<string> WeatherTypes = new()
-        {
+            "shower"
+        ];
+        private readonly List<string> WeatherTypes =
+        [
             "EXTRASUNNY",
             "CLEAR",
             "NEUTRAL",
@@ -184,7 +184,7 @@ namespace vMenuServer
             "SNOWLIGHT",
             "XMAS",
             "HALLOWEEN"
-        };
+        ];
         #endregion
 
         #region Constructor
@@ -225,7 +225,7 @@ namespace vMenuServer
 
 
                 // check extras file for errors
-                string extras = LoadResourceFile(GetCurrentResourceName(), "config/extras.json") ?? "{}";
+                var extras = LoadResourceFile(GetCurrentResourceName(), "config/extras.json") ?? "{}";
                 try
                 {
                     JsonConvert.DeserializeObject<Dictionary<string, Dictionary<int, string>>>(extras);
@@ -523,33 +523,33 @@ namespace vMenuServer
                 return;
             }
 
-            Entity vehicle = Entity.FromNetworkId(vehicleNetId);
+            var vehicle = Entity.FromNetworkId(vehicleNetId);
 
             if (vehicle is null)
             {
                 return;
             }
 
-            int vehicleHandle = vehicle.Handle;
+            var vehicleHandle = vehicle.Handle;
 
-            for (int i = -1; i < 15; i++)
+            for (var i = -1; i < 15; i++)
             {
-                int pedHandle = GetPedInVehicleSeat(vehicleHandle, i);
+                var pedHandle = GetPedInVehicleSeat(vehicleHandle, i);
 
                 if (pedHandle == 0 || !IsPedAPlayer(pedHandle))
                 {
                     continue;
                 }
 
-                int playerHandle = NetworkGetEntityOwner(pedHandle);
-                Player player = GetPlayerFromServerId(playerHandle);
+                var playerHandle = NetworkGetEntityOwner(pedHandle);
+                var player = GetPlayerFromServerId(playerHandle);
 
                 if (player is null || player == source)
                 {
                     continue;
                 }
 
-                int warpOutFlag = 16;
+                var warpOutFlag = 16;
 
                 TaskLeaveVehicle(pedHandle, vehicleHandle, warpOutFlag);
 
@@ -565,8 +565,8 @@ namespace vMenuServer
         [EventHandler("vMenu:ClearArea")]
         internal void ClearAreaNearPos([FromSource] Player source)
         {
-            Ped ped = source.Character;
-            Vector3 position = ped.Position;
+            var ped = source.Character;
+            var position = ped.Position;
 
             TriggerClientEvent("vMenu:ClearArea", position);
         }
@@ -755,7 +755,7 @@ namespace vMenuServer
                 return;
             }
 
-            bool allWOPermissions = PermissionsManager.IsAllowed(PermissionsManager.Permission.WOAll, source);
+            var allWOPermissions = PermissionsManager.IsAllowed(PermissionsManager.Permission.WOAll, source);
 
             if (removeClouds)
             {
@@ -833,7 +833,7 @@ namespace vMenuServer
                 return;
             }
 
-            Player targetPlayer = GetPlayerFromServerId(target);
+            var targetPlayer = GetPlayerFromServerId(target);
 
             if (targetPlayer is null)
             {
@@ -868,7 +868,7 @@ namespace vMenuServer
                 return;
             }
 
-            Player targetPlayer = GetPlayerFromServerId(target);
+            var targetPlayer = GetPlayerFromServerId(target);
 
             if (targetPlayer is null)
             {
@@ -892,7 +892,7 @@ namespace vMenuServer
                 return;
             }
 
-            Player targetPlayer = GetPlayerFromServerId(target);
+            var targetPlayer = GetPlayerFromServerId(target);
 
             if (targetPlayer is null)
             {
@@ -900,17 +900,17 @@ namespace vMenuServer
             }
 
             int targetPedHandle;
-            Ped targetPed = targetPlayer.Character;
+            var targetPed = targetPlayer.Character;
 
             if (targetPed is null || !DoesEntityExist(targetPedHandle = targetPed.Handle))
             {
                 return;
             }
 
-            bool lastVehicle = false;
-            Ped sourcePed = source.Character;
-            int sourcePedHandle = sourcePed.Handle;
-            int sourcePedVehicle = GetVehiclePedIsIn(sourcePedHandle, lastVehicle);
+            var lastVehicle = false;
+            var sourcePed = source.Character;
+            var sourcePedHandle = sourcePed.Handle;
+            var sourcePedVehicle = GetVehiclePedIsIn(sourcePedHandle, lastVehicle);
 
             if (sourcePedVehicle == 0)
             {
@@ -918,14 +918,14 @@ namespace vMenuServer
                 return;
             }
 
-            bool seatFound = false;
+            var seatFound = false;
 
             // Seat indices start at `-1`
             numberOfSeats -= 1;
 
-            for (int i = -1; i < numberOfSeats; i++)
+            for (var i = -1; i < numberOfSeats; i++)
             {
-                bool seatFree = GetPedInVehicleSeat(sourcePedVehicle, i) == 0;
+                var seatFree = GetPedInVehicleSeat(sourcePedVehicle, i) == 0;
 
                 if (!seatFree)
                 {
@@ -933,9 +933,9 @@ namespace vMenuServer
                 }
 
                 Vector3 checkPosition;
-                long timeout = GetGameTimer() + 1_500;
-                Vector3 priorPosition = targetPed.Position;
-                Vector3 newPosition = sourcePed.Position + new Vector3(0f, 0f, 5f);
+                var timeout = GetGameTimer() + 1_500;
+                var priorPosition = targetPed.Position;
+                var newPosition = sourcePed.Position + new Vector3(0f, 0f, 5f);
 
                 seatFound = true;
                 targetPed.Position = newPosition;
@@ -978,7 +978,7 @@ namespace vMenuServer
                 return;
             }
 
-            Player targetPlayer = GetPlayerFromServerId(target);
+            var targetPlayer = GetPlayerFromServerId(target);
 
             if (targetPlayer is null)
             {
@@ -996,14 +996,14 @@ namespace vMenuServer
 
             targetPlayer.TriggerEvent("vMenu:PrivateMessage", source.Handle, message);
 
-            foreach (string playerHandle in joinedPlayers)
+            foreach (var playerHandle in joinedPlayers)
             {
                 if (!PermissionsManager.IsAllowed(PermissionsManager.Permission.OPSeePrivateMessages, playerHandle) && !PermissionsManager.IsAllowed(PermissionsManager.Permission.OPAll, playerHandle))
                 {
                     continue;
                 }
 
-                Player player = GetPlayerFromServerId(playerHandle);
+                var player = GetPlayerFromServerId(playerHandle);
 
                 player?.TriggerEvent("vMenu:Notify", $"[vMenu Staff Log] <C>{source.Name}</C>~s~ sent a PM to <C>{targetPlayer.Name}</C>~s~: {message}");
             }
@@ -1092,11 +1092,11 @@ namespace vMenuServer
 
             if (PermissionsManager.IsAllowed(PermissionsManager.Permission.OPTeleport, source) || PermissionsManager.IsAllowed(PermissionsManager.Permission.OPAll, source))
             {
-                Player targetPlayer = GetPlayerFromServerId(playerId);
+                var targetPlayer = GetPlayerFromServerId(playerId);
 
                 if (targetPlayer is not null)
                 {
-                    Ped targetPed = targetPlayer.Character;
+                    var targetPed = targetPlayer.Character;
 
                     if (targetPed is not null && DoesEntityExist(targetPed.Handle))
                     {
@@ -1110,20 +1110,20 @@ namespace vMenuServer
         #endregion
 
         #region Player join/quit
-        private readonly HashSet<string> joinedPlayers = new();
+        private readonly HashSet<string> joinedPlayers = [];
 
         private IEnumerable<Player> GetJoinQuitNotifPlayers()
         {
             List<Player> players = [];
 
-            foreach (string playerHandle in joinedPlayers)
+            foreach (var playerHandle in joinedPlayers)
             {
                 if (!PermissionsManager.IsAllowed(PermissionsManager.Permission.MSJoinQuitNotifs, playerHandle) && !PermissionsManager.IsAllowed(PermissionsManager.Permission.MSAll, playerHandle))
                 {
                     continue;
                 }
 
-                Player player = GetPlayerFromServerId(playerHandle);
+                var player = GetPlayerFromServerId(playerHandle);
 
                 if (player is not null)
                 {
@@ -1156,9 +1156,9 @@ namespace vMenuServer
 
             PermissionsManager.SetPermissionsForPlayer(sourcePlayer);
 
-            string sourcePlayerName = sourcePlayer.Name;
+            var sourcePlayerName = sourcePlayer.Name;
 
-            foreach (Player notifPlayer in GetJoinQuitNotifPlayers())
+            foreach (var notifPlayer in GetJoinQuitNotifPlayers())
             {
                 notifPlayer.TriggerEvent("vMenu:PlayerJoinQuit", sourcePlayerName, null);
             }
@@ -1174,9 +1174,9 @@ namespace vMenuServer
 
             joinedPlayers.Remove(sourcePlayer.Handle);
 
-            string sourcePlayerName = sourcePlayer.Name;
+            var sourcePlayerName = sourcePlayer.Name;
             
-            foreach (Player notifPlayer in GetJoinQuitNotifPlayers())
+            foreach (var notifPlayer in GetJoinQuitNotifPlayers())
             {
                 notifPlayer.TriggerEvent("vMenu:PlayerJoinQuit", sourcePlayerName, reason);
             }
@@ -1186,7 +1186,7 @@ namespace vMenuServer
         #region Utilities
         private Player GetPlayerFromServerId(string serverId)
         {
-            if (!int.TryParse(serverId, out int serverIdInt))
+            if (!int.TryParse(serverId, out var serverIdInt))
             {
                 return null;
             }
@@ -1196,7 +1196,7 @@ namespace vMenuServer
 
         private Player GetPlayerFromServerId(int serverId)
         {
-            string serverIdString = serverId.ToString();
+            var serverIdString = serverId.ToString();
 
             if (serverId <= 0 || !DoesPlayerExist(serverIdString))
             {
@@ -1217,7 +1217,7 @@ namespace vMenuServer
                 return;
             }
 
-            Vehicle veh = new Vehicle(NetworkGetEntityFromNetworkId(vehicle));
+            var veh = new Vehicle(NetworkGetEntityFromNetworkId(vehicle));
             EnsureEntityStateBag(veh.Handle);
 
             veh.State.Set("vMenu:engineSound", engineSound, true);

@@ -47,29 +47,29 @@ namespace vMenuClient.data
 
     internal static class MaleTattoosCollection
     {
-        internal static List<Tattoo> TORSO = new();
-        internal static List<Tattoo> HEAD = new();
-        internal static List<Tattoo> LEFT_ARM = new();
-        internal static List<Tattoo> RIGHT_ARM = new();
-        internal static List<Tattoo> LEFT_LEG = new();
-        internal static List<Tattoo> RIGHT_LEG = new();
-        internal static List<Tattoo> BADGES = new();
+        internal static List<Tattoo> TORSO = [];
+        internal static List<Tattoo> HEAD = [];
+        internal static List<Tattoo> LEFT_ARM = [];
+        internal static List<Tattoo> RIGHT_ARM = [];
+        internal static List<Tattoo> LEFT_LEG = [];
+        internal static List<Tattoo> RIGHT_LEG = [];
+        internal static List<Tattoo> BADGES = [];
     }
 
     internal struct FemaleTattoosCollection
     {
-        internal static List<Tattoo> TORSO = new();
-        internal static List<Tattoo> HEAD = new();
-        internal static List<Tattoo> LEFT_ARM = new();
-        internal static List<Tattoo> RIGHT_ARM = new();
-        internal static List<Tattoo> LEFT_LEG = new();
-        internal static List<Tattoo> RIGHT_LEG = new();
-        internal static List<Tattoo> BADGES = new();
+        internal static List<Tattoo> TORSO = [];
+        internal static List<Tattoo> HEAD = [];
+        internal static List<Tattoo> LEFT_ARM = [];
+        internal static List<Tattoo> RIGHT_ARM = [];
+        internal static List<Tattoo> LEFT_LEG = [];
+        internal static List<Tattoo> RIGHT_LEG = [];
+        internal static List<Tattoo> BADGES = [];
     }
 
     internal static class TattoosData
     {
-        private static bool isDataSetup = false;
+        private static bool isDataSetup;
         internal static void GenerateTattoosData()
         {
             if (isDataSetup)

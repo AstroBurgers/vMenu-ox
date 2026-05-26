@@ -83,14 +83,14 @@ namespace vMenuClient
         private static string _currentScenario = "";
         private static Vehicle _previousVehicle;
 
-        public static bool VehicleSpawnerCooldownEnabled = false;
+        public static bool VehicleSpawnerCooldownEnabled;
         public static int VehicleSpawnerCooldown = vMenuShared.ConfigManager.GetSettingsInt(vMenuShared.ConfigManager.Setting.vmenu_vehicle_spawner_cooldown) != -1
             ? vMenuShared.ConfigManager.GetSettingsInt(vMenuShared.ConfigManager.Setting.vmenu_vehicle_spawner_cooldown)
             : 1000;
 
-        internal static bool DriveToWpTaskActive = false;
-        internal static bool DriveWanderTaskActive = false;
-        public static List<string> EngineSounds = new List<string>();
+        internal static bool DriveToWpTaskActive;
+        internal static bool DriveWanderTaskActive;
+        public static List<string> EngineSounds = [];
         #endregion
 
         #region some misc functions copied from base script
@@ -1042,8 +1042,8 @@ namespace vMenuClient
         /// <param name="player"></param>
         public static void SummonPlayer(IPlayer player)
         {
-            Vehicle currentVehicle = GetVehicle();
-            int numberOfSeats = currentVehicle is not null ? GetVehicleModelNumberOfSeats(currentVehicle.Model) : 0;
+            var currentVehicle = GetVehicle();
+            var numberOfSeats = currentVehicle is not null ? GetVehicleModelNumberOfSeats(currentVehicle.Model) : 0;
 
             TriggerServerEvent("vMenu:SummonPlayer", player.ServerId, numberOfSeats);
         }
@@ -1536,7 +1536,7 @@ namespace vMenuClient
                 ToggleVehicleMod(vehicle.Handle, 22, vehicleInfo.xenonHeadlights);
                 SetVehicleLivery(vehicle.Handle, vehicleInfo.livery);
 
-                bool useCustomRgbPrimary = vehicleInfo.colors.ContainsKey("customPrimaryR") && vehicleInfo.colors.ContainsKey("customPrimaryG") && vehicleInfo.colors.ContainsKey("customPrimaryB");
+                var useCustomRgbPrimary = vehicleInfo.colors.ContainsKey("customPrimaryR") && vehicleInfo.colors.ContainsKey("customPrimaryG") && vehicleInfo.colors.ContainsKey("customPrimaryB");
                 if (useCustomRgbPrimary && vehicleInfo.colors["customPrimaryR"] > 0 && vehicleInfo.colors["customPrimaryG"] > 0 && vehicleInfo.colors["customPrimaryB"] > 0)
                 {
                     vehicle.Mods.CustomPrimaryColor = System.Drawing.Color.FromArgb(255, vehicleInfo.colors["customPrimaryR"], vehicleInfo.colors["customPrimaryG"], vehicleInfo.colors["customPrimaryB"]);
@@ -1546,7 +1546,7 @@ namespace vMenuClient
                     vehicle.Mods.PrimaryColor = (VehicleColor)vehicleInfo.colors["primary"];
                 }
 
-                bool useCustomRgbSecondary = vehicleInfo.colors.ContainsKey("customSecondaryR") && vehicleInfo.colors.ContainsKey("customSecondaryG") && vehicleInfo.colors.ContainsKey("customSecondaryB");
+                var useCustomRgbSecondary = vehicleInfo.colors.ContainsKey("customSecondaryR") && vehicleInfo.colors.ContainsKey("customSecondaryG") && vehicleInfo.colors.ContainsKey("customSecondaryB");
                 if (useCustomRgbSecondary && vehicleInfo.colors["customSecondaryR"] > 0 && vehicleInfo.colors["customSecondaryG"] > 0 && vehicleInfo.colors["customSecondaryB"] > 0)
                 {
                     vehicle.Mods.CustomSecondaryColor = System.Drawing.Color.FromArgb(255, vehicleInfo.colors["customSecondaryR"], vehicleInfo.colors["customSecondaryG"], vehicleInfo.colors["customSecondaryB"]);
@@ -1703,10 +1703,10 @@ namespace vMenuClient
                     colors.Add("tyresmokeG", tyresmokeG);
                     colors.Add("tyresmokeB", tyresmokeB);
 
-                    int customPrimaryR = -1;
-                    int customPrimaryG = -1;
-                    int customPrimaryB = -1;
-                    bool primaryColorIsCustom = GetIsVehiclePrimaryColourCustom(veh.Handle);
+                    var customPrimaryR = -1;
+                    var customPrimaryG = -1;
+                    var customPrimaryB = -1;
+                    var primaryColorIsCustom = GetIsVehiclePrimaryColourCustom(veh.Handle);
 
                     if (primaryColorIsCustom)
                     {
@@ -1717,11 +1717,11 @@ namespace vMenuClient
                     colors.Add("customPrimaryG", customPrimaryG);
                     colors.Add("customPrimaryB", customPrimaryB);
 
-                    int customSecondaryR = -1;
-                    int customSecondaryG = -1;
-                    int customSecondaryB = -1;
+                    var customSecondaryR = -1;
+                    var customSecondaryG = -1;
+                    var customSecondaryB = -1;
 
-                    bool secondaryColorIsCustom = GetIsVehicleSecondaryColourCustom(veh.Handle);
+                    var secondaryColorIsCustom = GetIsVehicleSecondaryColourCustom(veh.Handle);
 
                     if (secondaryColorIsCustom)
                     {
@@ -2850,15 +2850,15 @@ namespace vMenuClient
                 var jsonString = GetResourceKvpString("vmenu_temp_weapons_loadout_before_respawn") ?? "{}";
                 if (string.IsNullOrEmpty(jsonString) || jsonString == "{}")
                 {
-                    return new List<ValidWeapon>();
+                    return [];
                 }
                 try
                 {
-                    return JsonConvert.DeserializeObject<List<ValidWeapon>>(jsonString, settings) ?? new List<ValidWeapon>();
+                    return JsonConvert.DeserializeObject<List<ValidWeapon>>(jsonString, settings) ?? [];
                 }
                 catch
                 {
-                    return new List<ValidWeapon>();
+                    return [];
                 }
             }
             else
@@ -2866,15 +2866,15 @@ namespace vMenuClient
                 var kvp = GetResourceKvpString(saveName.StartsWith("vmenu_string_saved_weapon_loadout_") ? saveName : "vmenu_string_saved_weapon_loadout_" + saveName);
                 if (string.IsNullOrEmpty(kvp))
                 {
-                    return new List<ValidWeapon>();
+                    return [];
                 }
                 try
                 {
-                    return JsonConvert.DeserializeObject<List<ValidWeapon>>(kvp, settings) ?? new List<ValidWeapon>();
+                    return JsonConvert.DeserializeObject<List<ValidWeapon>>(kvp, settings) ?? [];
                 }
                 catch
                 {
-                    return new List<ValidWeapon>();
+                    return [];
                 }
             }
         }
@@ -2906,13 +2906,13 @@ namespace vMenuClient
 
                     if (!MainMenu.MiscSettingsMenu.RestorePlayerWeapons || !IsAllowed(Permission.MSRestoreWeapons))
                     {
-                        loadout = new List<ValidWeapon>();
+                        loadout = [];
                     }
                 }
 
                 if (string.IsNullOrEmpty(kvp))
                 {
-                    loadout = new List<ValidWeapon>();
+                    loadout = [];
                 }
                 else
                 {
@@ -3327,23 +3327,9 @@ namespace vMenuClient
         {
             return new Vector3[12][]
             {
-                new Vector3[3] { box[2], box[1], box[0] },
-                new Vector3[3] { box[3], box[2], box[0] },
-
-                new Vector3[3] { box[4], box[5], box[6] },
-                new Vector3[3] { box[4], box[6], box[7] },
-
-                new Vector3[3] { box[2], box[3], box[6] },
-                new Vector3[3] { box[7], box[6], box[3] },
-
-                new Vector3[3] { box[0], box[1], box[4] },
-                new Vector3[3] { box[5], box[4], box[1] },
-
-                new Vector3[3] { box[1], box[2], box[5] },
-                new Vector3[3] { box[2], box[6], box[5] },
-
-                new Vector3[3] { box[4], box[7], box[3] },
-                new Vector3[3] { box[4], box[3], box[0] }
+                [box[2], box[1], box[0]], [box[3], box[2], box[0]], [box[4], box[5], box[6]], [box[4], box[6], box[7]],
+                [box[2], box[3], box[6]], [box[7], box[6], box[3]], [box[0], box[1], box[4]], [box[5], box[4], box[1]],
+                [box[1], box[2], box[5]], [box[2], box[6], box[5]], [box[4], box[7], box[3]], [box[4], box[3], box[0]]
             };
         }
 
@@ -3356,20 +3342,10 @@ namespace vMenuClient
         {
             return new Vector3[12][]
             {
-                new Vector3[2] { box[0], box[1] },
-                new Vector3[2] { box[1], box[2] },
-                new Vector3[2] { box[2], box[3] },
-                new Vector3[2] { box[3], box[0] },
-
-                new Vector3[2] { box[4], box[5] },
-                new Vector3[2] { box[5], box[6] },
-                new Vector3[2] { box[6], box[7] },
-                new Vector3[2] { box[7], box[4] },
-
-                new Vector3[2] { box[0], box[4] },
-                new Vector3[2] { box[1], box[5] },
-                new Vector3[2] { box[2], box[6] },
-                new Vector3[2] { box[3], box[7] }
+                [box[0], box[1]], [box[1], box[2]], [box[2], box[3]], [box[3], box[0]], [box[4], box[5]], [box[5], box[6]
+                ],
+                [box[6], box[7]], [box[7], box[4]], [box[0], box[4]], [box[1], box[5]], [box[2], box[6]], [box[3], box[7]
+                ]
             };
         }
 
@@ -3658,7 +3634,7 @@ namespace vMenuClient
         #region Get all vehicle mods
         public static VehicleMod[] GetAllVehicleMods(Vehicle vehicle)
         {
-            int vehicleHandle = vehicle.Handle;
+            var vehicleHandle = vehicle.Handle;
 
             bool HasVehicleMod(VehicleData.ModType modType)
             {

@@ -27,24 +27,24 @@ namespace vMenuClient.menus
 
         public bool ShowSpeedoKmh { get; private set; } = UserDefaults.MiscSpeedKmh;
         public bool ShowSpeedoMph { get; private set; } = UserDefaults.MiscSpeedMph;
-        public bool ShowCoordinates { get; private set; } = false;
-        public bool HideHud { get; private set; } = false;
-        public bool HideRadar { get; private set; } = false;
+        public bool ShowCoordinates { get; private set; }
+        public bool HideHud { get; private set; }
+        public bool HideRadar { get; private set; }
         public bool ShowLocation { get; private set; } = UserDefaults.MiscShowLocation;
         public bool DeathNotifications { get; private set; } = UserDefaults.MiscDeathNotifications;
         public bool JoinQuitNotifications { get; private set; } = UserDefaults.MiscJoinQuitNotifications;
-        public bool LockCameraX { get; private set; } = false;
-        public bool LockCameraY { get; private set; } = false;
+        public bool LockCameraX { get; private set; }
+        public bool LockCameraY { get; private set; }
         public bool MPPedPreviews { get; private set; } = UserDefaults.MPPedPreviews;
         public bool ShowLocationBlips { get; private set; } = UserDefaults.MiscLocationBlips;
         public bool ShowPlayerBlips { get; private set; } = UserDefaults.MiscShowPlayerBlips;
         public bool MiscShowOverheadNames { get; private set; } = UserDefaults.MiscShowOverheadNames;
-        public bool ShowVehicleModelDimensions { get; private set; } = false;
-        public bool ShowPedModelDimensions { get; private set; } = false;
-        public bool ShowPropModelDimensions { get; private set; } = false;
-        public bool ShowEntityHandles { get; private set; } = false;
-        public bool ShowEntityModels { get; private set; } = false;
-        public bool ShowEntityNetOwners { get; private set; } = false;
+        public bool ShowVehicleModelDimensions { get; private set; }
+        public bool ShowPedModelDimensions { get; private set; }
+        public bool ShowPropModelDimensions { get; private set; }
+        public bool ShowEntityHandles { get; private set; }
+        public bool ShowEntityModels { get; private set; }
+        public bool ShowEntityNetOwners { get; private set; }
         public bool MiscRespawnDefaultCharacter { get; private set; } = UserDefaults.MiscRespawnDefaultCharacter;
         public bool RestorePlayerAppearance { get; private set; } = UserDefaults.MiscRestorePlayerAppearance;
         public bool RestorePlayerWeapons { get; private set; } = UserDefaults.MiscRestorePlayerWeapons;
@@ -62,7 +62,7 @@ namespace vMenuClient.menus
         }
         public bool MiscDisableControllerSupport { get; private set; } = UserDefaults.MiscDisableControllerSupport;
 
-        internal bool TimecycleEnabled { get; private set; } = false;
+        internal bool TimecycleEnabled { get; private set; }
         internal int LastTimeCycleModifierIndex { get; private set; } = UserDefaults.MiscLastTimeCycleModifierIndex;
         internal int LastTimeCycleModifierStrength { get; private set; } = UserDefaults.MiscLastTimeCycleModifierStrength;
 
@@ -77,7 +77,7 @@ namespace vMenuClient.menus
         public bool KbRadarKeys { get; private set; } = UserDefaults.KbRadarKeys;
         public bool KbPointKeys { get; private set; } = UserDefaults.KbPointKeys;
 
-        internal static List<vMenuShared.ConfigManager.TeleportLocation> TpLocations = new();
+        internal static List<vMenuShared.ConfigManager.TeleportLocation> TpLocations = [];
 
         public MiscSettings()
         {
@@ -657,7 +657,7 @@ namespace vMenuClient.menus
             {
                 menu.AddMenuItem(nightVision);
                 RegisterKeyMapping("toggle-nv", "Night Vision", "keyboard", "");
-                bool nvEnabled = false;
+                var nvEnabled = false;
                 RegisterCommand("toggle-nv", new Action<int, List<object>, string>((source, args, rawCommand) =>
                 {
                     if(!CanDoInteraction("nightvision") && !nvEnabled)
@@ -675,7 +675,7 @@ namespace vMenuClient.menus
             {
                 menu.AddMenuItem(thermalVision);
                 RegisterKeyMapping("toggle-tv", "Thermal Vision", "keyboard", "");
-                bool tvEnabled = false;
+                var tvEnabled = false;
                 RegisterCommand("toggle-tv", new Action<int, List<object>, string>((source, args, rawCommand) =>
                 {
                     if (!CanDoInteraction("thermalvision") && !tvEnabled)
@@ -940,7 +940,7 @@ namespace vMenuClient.menus
             }
         }
 
-        private readonly List<Blip> blips = new();
+        private readonly List<Blip> blips = [];
 
         /// <summary>
         /// Toggles blips on/off.

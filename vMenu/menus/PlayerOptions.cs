@@ -21,7 +21,7 @@ namespace vMenuClient.menus
 
         // Public variables (getters only), return the private variables.
         public bool PlayerGodMode { get; private set; } = UserDefaults.PlayerGodMode;
-        public bool PlayerInvisible { get; private set; } = false;
+        public bool PlayerInvisible { get; private set; }
         public bool PlayerStamina { get; private set; } = UserDefaults.UnlimitedStamina;
         public bool PlayerFastRun { get; private set; } = UserDefaults.FastRun;
         public bool PlayerFastSwim { get; private set; } = UserDefaults.FastSwim;
@@ -30,7 +30,7 @@ namespace vMenuClient.menus
         public bool PlayerNeverWanted { get; private set; } = UserDefaults.NeverWanted;
         public bool PlayerIsIgnored { get; private set; } = UserDefaults.EveryoneIgnorePlayer;
         public bool PlayerStayInVehicle { get; private set; } = UserDefaults.PlayerStayInVehicle;
-        public bool PlayerFrozen { get; private set; } = false;
+        public bool PlayerFrozen { get; private set; }
 
         public int PlayerBlood { get; private set; } = 0;
 
@@ -63,7 +63,11 @@ namespace vMenuClient.menus
             // Wanted level options
             var wantedLevelList = new List<string> { "No Wanted Level", "1", "2", "3", "4", "5" };
             var setWantedLevel = new MenuListItem("Set Wanted Level", wantedLevelList, GetPlayerWantedLevel(Game.Player.Handle), "Set your wanted level by selecting a value, and pressing enter.");
-            var setArmorItem = new MenuListItem("Set Armor Type", new List<string> { "No Armor", GetLabelText("WT_BA_0"), GetLabelText("WT_BA_1"), GetLabelText("WT_BA_2"), GetLabelText("WT_BA_3"), GetLabelText("WT_BA_4"), }, 0, "Set the armor level/type for your player.");
+            var setArmorItem = new MenuListItem("Set Armor Type",
+            [
+                "No Armor", GetLabelText("WT_BA_0"), GetLabelText("WT_BA_1"), GetLabelText("WT_BA_2"),
+                GetLabelText("WT_BA_3"), GetLabelText("WT_BA_4")
+            ], 0, "Set the armor level/type for your player.");
 
             // Blood level options
             var clearBloodBtn = new MenuItem("Clear Blood", "Clear the blood off your player.");
