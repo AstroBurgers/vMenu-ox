@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using CitizenFX.Core;
+
 using MenuAPI;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -215,13 +216,18 @@ namespace vMenuClient.menus
 
                     MenuItem vehBtn;
 
+                    // AFTER
+                    var stats = DoesModelExist(veh)
+                        ? new float[] { topSpeed, acceleration, braking, traction }
+                        : new float[] { 0f, 0f, 0f, 0f };
+
                     if (DoesModelExist(veh))
                     {
                         vehBtn = new MenuItem(vehName)
                         {
                             Enabled = true,
                             Label = $"({veh.ToLower()})",
-                            ItemData = new float[] { topSpeed, acceleration, braking, traction }
+                            ItemData = new VehicleMenuItemData(veh, stats)
                         };
                     }
                     else
@@ -231,7 +237,7 @@ namespace vMenuClient.menus
                         {
                             Enabled = false,
                             Label = $"({veh.ToLower()})",
-                            ItemData = new float[] { 0f, 0f, 0f, 0f },
+                            ItemData = new VehicleMenuItemData(null, stats),
                             RightIcon = MenuItem.Icon.LOCK
                         };
                     }
@@ -241,21 +247,32 @@ namespace vMenuClient.menus
 
                 vehicleClassMenu.ShowVehicleStatsPanel = vehicleClassMenu.Size > 0;
 
-                vehicleClassMenu.OnItemSelect += async (_, _, index) =>
+                // AFTER
+                vehicleClassMenu.OnItemSelect += async (_, item, _) =>
                 {
-                    await SpawnVehicle(
-                        VehicleData.Vehicles.VehicleClasses[className][index],
-                        SpawnInVehicle,
-                        ReplaceVehicle
-                    );
+                    // Guard: only spawn if the item carries a valid model name
+                    if (item?.ItemData is not VehicleMenuItemData itemData || string.IsNullOrEmpty(itemData.Model))
+                    {
+                        Debug.WriteLine("[VMENU] Spawn blocked — item has no valid model name.");
+                        return;
+                    }
+
+                    if (!DoesModelExist(itemData.Model))
+                    {
+                        Debug.WriteLine($"[VMENU] Spawn blocked — model not loaded: {itemData.Model}");
+                        Notify.Alert($"~r~Cannot spawn ~w~{itemData.Model}~r~ — model not loaded.");
+                        return;
+                    }
+
+                    await SpawnVehicle(itemData.Model, SpawnInVehicle, ReplaceVehicle);
                 };
 
                 void HandleStats(Menu m, MenuItem item)
                 {
-                    if (item?.ItemData is float[] data)
+                    if (item?.ItemData is VehicleMenuItemData d)
                     {
                         m.ShowVehicleStatsPanel = true;
-                        m.SetVehicleStats(data[0], data[1], data[2], data[3]);
+                        m.SetVehicleStats(d.Stats[0], d.Stats[1], d.Stats[2], d.Stats[3]);
                         m.SetVehicleUpgradeStats(0f, 0f, 0f, 0f);
                     }
                     else
@@ -306,6 +323,18 @@ namespace vMenuClient.menus
             }
 
             return menu;
+        }
+    }
+
+    internal class VehicleMenuItemData
+    {
+        public string Model { get; }
+        public float[] Stats { get; }
+
+        public VehicleMenuItemData(string model, float[] stats)
+        {
+            Model = model;
+            Stats = stats;
         }
     }
 }

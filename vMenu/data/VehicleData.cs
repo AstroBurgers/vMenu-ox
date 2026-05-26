@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 using static CitizenFX.Core.Native.API;
 
@@ -1443,15 +1444,7 @@ namespace vMenuClient.data
 
             public static string[] GetAllVehicles()
             {
-                var vehs = new List<string>();
-                foreach (var vc in VehicleClasses)
-                {
-                    foreach (var c in vc.Value)
-                    {
-                        vehs.Add(c);
-                    }
-                }
-                return vehs.ToArray();
+                return VehicleClasses.SelectMany(vc => vc.Value).ToArray();
             }
         }
 

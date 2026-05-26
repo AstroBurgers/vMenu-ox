@@ -4,8 +4,6 @@ using CitizenFX.Core;
 
 using MenuAPI;
 
-using vMenuShared;
-
 using static vMenuClient.CommonFunctions;
 using static vMenuShared.PermissionsManager;
 using static vMenuShared.ConfigManager;

@@ -3,7 +3,7 @@
 using CitizenFX.Core;
 
 using static CitizenFX.Core.Native.API;
-using static CitizenFX.Core.UI.Screen;
+
 using static vMenuShared.ConfigManager;
 using static vMenuClient.CommonFunctions;
 

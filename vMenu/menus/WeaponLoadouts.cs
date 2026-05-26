@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 using CitizenFX.Core;
 
@@ -13,7 +12,6 @@ using static CitizenFX.Core.Native.API;
 using static vMenuClient.CommonFunctions;
 using static vMenuShared.PermissionsManager;
 using static vMenuShared.ConfigManager;
-using System.Threading.Tasks;
 
 namespace vMenuClient.menus
 {
