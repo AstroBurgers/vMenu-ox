@@ -66,16 +66,23 @@ namespace vMenuClient
             overheadColourCache.Clear();
 
             var dict = cacheObj as IDictionary<string, object>;
-            if (dict == null) return;
+            if (dict == null)
+            {
+                return;
+            }
 
             foreach (var kvp in dict)
             {
                 if (!int.TryParse(kvp.Key, out var playerId))
+                {
                     continue;
+                }
 
                 var entry = kvp.Value as IDictionary<string, object>;
                 if (entry == null)
+                {
                     continue;
+                }
 
                 if (entry.TryGetValue("name", out var nameObj))
                 {

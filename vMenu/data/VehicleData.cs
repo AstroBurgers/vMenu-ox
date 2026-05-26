@@ -1379,6 +1379,9 @@ namespace vMenuClient.data
             #endregion
 
             #region Addon Vehicles
+
+            public static Dictionary<string, string> CustomVehicleNames = new();
+            
             public static void ProcessAddonVehicles(List<string> addonNames)
             {
                 foreach (var addon in addonNames)

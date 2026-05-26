@@ -69,15 +69,15 @@ namespace vMenuClient.menus
 
         // keybind states
         public bool KbTpToWaypoint { get; private set; } = UserDefaults.KbTpToWaypoint;
-        public int KbTpToWaypointKey { get; } = vMenuShared.ConfigManager.GetSettingsInt(vMenuShared.ConfigManager.Setting.vmenu_teleport_to_wp_keybind_key) != -1
-            ? vMenuShared.ConfigManager.GetSettingsInt(vMenuShared.ConfigManager.Setting.vmenu_teleport_to_wp_keybind_key)
+        public int KbTpToWaypointKey { get; } = GetSettingsInt(Setting.vmenu_teleport_to_wp_keybind_key) != -1
+            ? GetSettingsInt(Setting.vmenu_teleport_to_wp_keybind_key)
             : 168; // 168 (F7 by default)
         public bool KbDriftMode { get; private set; } = UserDefaults.KbDriftMode;
         public bool KbRecordKeys { get; private set; } = UserDefaults.KbRecordKeys;
         public bool KbRadarKeys { get; private set; } = UserDefaults.KbRadarKeys;
         public bool KbPointKeys { get; private set; } = UserDefaults.KbPointKeys;
 
-        internal static List<vMenuShared.ConfigManager.TeleportLocation> TpLocations = [];
+        internal static List<TeleportLocation> TpLocations = [];
 
         public MiscSettings()
         {
@@ -395,7 +395,7 @@ namespace vMenuClient.menus
 
                     teleportMenu.OnItemSelect += async (_, item, _) =>
                     {
-                        if (item.ItemData is vMenuShared.ConfigManager.TeleportLocation tl)
+                        if (item.ItemData is TeleportLocation tl)
                         {
                             await TeleportToCoords(tl.coordinates, true);
                             SetEntityHeading(Game.PlayerPed.Handle, tl.heading);
@@ -431,7 +431,7 @@ namespace vMenuClient.menus
             }
 
             // model outlines
-            if ((!vMenuShared.ConfigManager.GetSettingsBool(vMenuShared.ConfigManager.Setting.vmenu_disable_entity_outlines_tool)) && (IsAllowed(Permission.MSDevTools)))
+            if ((!GetSettingsBool(Setting.vmenu_disable_entity_outlines_tool)) && (IsAllowed(Permission.MSDevTools)))
             {
                 developerToolsMenu.AddMenuItem(vehModelDimensions);
                 developerToolsMenu.AddMenuItem(propModelDimensions);
@@ -952,7 +952,7 @@ namespace vMenuClient.menus
             {
                 try
                 {
-                    foreach (var bl in vMenuShared.ConfigManager.GetLocationBlipsData())
+                    foreach (var bl in GetLocationBlipsData())
                     {
                         var blipID = AddBlipForCoord(bl.coordinates.X, bl.coordinates.Y, bl.coordinates.Z);
                         SetBlipSprite(blipID, bl.spriteID);

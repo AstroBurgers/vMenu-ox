@@ -141,15 +141,21 @@ namespace vMenuClient
                     if (extras[model] != null && extras[model].Count > 0)
                     {
                         if (!VehicleOptions.VehicleExtras.ContainsKey(modelHash) || VehicleOptions.VehicleExtras[modelHash] == null)
+                        {
                             VehicleOptions.VehicleExtras.Add(modelHash, extras[model]);
+                        }
                         else
                         {
                             foreach(var extra in extras[model].Keys)
                             {
                                 if(!VehicleOptions.VehicleExtras[modelHash].ContainsKey(extra))
+                                {
                                     VehicleOptions.VehicleExtras[modelHash].Add(extra, extras[model][extra]);
+                                }
                                 else
+                                {
                                     Debug.WriteLine($"[vMenu] [Warning] Your extras.json file contains 2 or more entries with the same extra index! ({model}, Extra {extra}) Please remove duplicate!");
+                                }
                             }
                         }
                     }
@@ -314,7 +320,7 @@ namespace vMenuClient
         /// <param name="jsonData"></param>
         private void UpdateTeleportLocations(string jsonData)
         {
-            MiscSettings.TpLocations = JsonConvert.DeserializeObject<List<vMenuShared.ConfigManager.TeleportLocation>>(jsonData);
+            MiscSettings.TpLocations = JsonConvert.DeserializeObject<List<TeleportLocation>>(jsonData);
         }
     }
 }

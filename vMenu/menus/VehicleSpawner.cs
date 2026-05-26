@@ -27,7 +27,7 @@ namespace vMenuClient.menus
 
         // modelHash -> gameName (vehicles.meta / GXT resolved name)
         public static Dictionary<uint, string> VehicleGameNames = new();
-
+        
         private static HashSet<uint> _resolvedNames = new();
 
         private void CreateMenu()
@@ -37,10 +37,20 @@ namespace vMenuClient.menus
         }
 
         /// <summary>
-        /// Gets best display name: cached gameName → native label → model fallback
+        /// Gets best display name:
+        /// custom addon name → cached gameName → native label → model fallback
         /// </summary>
-        public static string GetVehicleName(string model)
+        private static string GetVehicleName(string model)
         {
+            // 0. custom addons.json display name
+            if (VehicleData.Vehicles.CustomVehicleNames.TryGetValue(model.ToLower(), out var customName))
+            {
+                if (!string.IsNullOrWhiteSpace(customName))
+                {
+                    return customName;
+                }
+            }
+
             uint hash = (uint)GetHashKey(model);
 
             // 1. cached vehicles.meta / resolved gameName
@@ -77,7 +87,9 @@ namespace vMenuClient.menus
             uint hash = (uint)GetHashKey(model);
 
             if (_resolvedNames.Contains(hash))
+            {
                 return;
+            }
 
             _resolvedNames.Add(hash);
 
@@ -109,7 +121,9 @@ namespace vMenuClient.menus
                 "Deletes last spawned vehicle automatically.", ReplaceVehicle);
 
             if (IsAllowed(Permission.VSSpawnByName))
+            {
                 menu.AddMenuItem(spawnByName);
+            }
 
             menu.AddMenuItem(searchButton);
             menu.AddMenuItem(spawnInVeh);
@@ -121,12 +135,27 @@ namespace vMenuClient.menus
 
             if (addons != null && addons.ContainsKey("vehicles"))
             {
-                var vehiclesList = JArray.FromObject(addons["vehicles"])
-                    .ToObject<List<string>>();
+                var addonVehicles = JObject.FromObject(addons["vehicles"])
+                    .ToObject<Dictionary<string, string>>();
 
-                VehicleData.Vehicles.ProcessAddonVehicles(vehiclesList);
+                if (addonVehicles != null)
+                {
+                    // Send only spawn names into vehicle processing
+                    VehicleData.Vehicles.ProcessAddonVehicles(
+                        addonVehicles.Values.ToList()
+                    );
 
-                Debug.WriteLine($"[VMENU] Loaded {vehiclesList.Count} addon vehicles");
+                    // Cache custom display names
+                    foreach (var kvp in addonVehicles)
+                    {
+                        // kvp.Key   = display name
+                        // kvp.Value = spawn name
+
+                        VehicleData.Vehicles.CustomVehicleNames[kvp.Value.ToLower()] = kvp.Key;
+                    }
+
+                    Debug.WriteLine($"[VMENU] Loaded {addonVehicles.Count} addon vehicles");
+                }
             }
 
             for (var vehClass = 0; vehClass < 23; vehClass++)
@@ -142,7 +171,9 @@ namespace vMenuClient.menus
                 menu.AddMenuItem(btn);
 
                 if (allowedCategories[vehClass])
+                {
                     MenuController.BindMenuItem(menu, vehicleClassMenu, btn);
+                }
                 else
                 {
                     btn.Enabled = false;
@@ -257,16 +288,22 @@ namespace vMenuClient.menus
             menu.OnCheckboxChange += (_, item, _, checkedState) =>
             {
                 if (item == spawnInVeh)
+                {
                     SpawnInVehicle = checkedState;
+                }
                 else if (item == replacePrev)
+                {
                     ReplaceVehicle = checkedState;
+                }
             };
         }
 
         public Menu GetMenu()
         {
             if (menu == null)
+            {
                 CreateMenu();
+            }
 
             return menu;
         }

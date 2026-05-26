@@ -60,7 +60,7 @@ namespace vMenuClient.menus
                 }
                 catch (System.Exception ex)
                 {
-                    CitizenFX.Core.Debug.WriteLine($"[vMenu] Error deserializing weapon loadout '{kvp}': {ex.Message}");
+                    Debug.WriteLine($"[vMenu] Error deserializing weapon loadout '{kvp}': {ex.Message}");
                 }
             }
             EndFindKvp(handle);
@@ -119,11 +119,11 @@ namespace vMenuClient.menus
                 }
                 catch (JsonException ex)
                 {
-                    CitizenFX.Core.Debug.WriteLine($"[vMenu] Error deserializing weapon loadout '{save}': {ex.Message}");
+                    Debug.WriteLine($"[vMenu] Error deserializing weapon loadout '{save}': {ex.Message}");
                 }
                 catch (System.Exception ex)
                 {
-                    CitizenFX.Core.Debug.WriteLine($"[vMenu] Unexpected error deserializing weapon loadout '{save}': {ex.Message}");
+                    Debug.WriteLine($"[vMenu] Unexpected error deserializing weapon loadout '{save}': {ex.Message}");
                 }
             }
 

@@ -552,7 +552,11 @@ namespace vMenuClient.menus
                             #region Handle component button presses
                             weaponMenu.OnCheckboxChange += (sender, item, _, _) =>
                             {
-                                if (item != compItem) return;
+                                if (item != compItem)
+                                {
+                                    return;
+                                }
+
                                 var weaponData = weaponInfo[sender];
                                 var componentHash = weaponData.Components[weaponComponents[item]];
                                 if (HasPedGotWeapon(Game.PlayerPed.Handle, weaponData.Hash, false))

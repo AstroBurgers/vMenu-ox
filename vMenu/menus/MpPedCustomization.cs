@@ -1988,15 +1988,15 @@ namespace vMenuClient.menus
                     {
                         while (!MenuController.IsAnyMenuOpen())
                         {
-                            await BaseScript.Delay(0);
+                            await Delay(0);
                         }
 
                         while (IsControlPressed(2, 201) || IsControlPressed(2, 217) || IsDisabledControlPressed(2, 201) || IsDisabledControlPressed(2, 217))
                         {
-                            await BaseScript.Delay(0);
+                            await Delay(0);
                         }
 
-                        await BaseScript.Delay(100);
+                        await Delay(100);
 
                         createCharacterMenu.GoBack();
                     }
@@ -2011,7 +2011,7 @@ namespace vMenuClient.menus
                     // wait for confirmation or cancel input.
                     while (true)
                     {
-                        await BaseScript.Delay(0);
+                        await Delay(0);
                         var unk = 1;
                         var unk2 = 1;
                         SetWarningMessage("vmenu_warning_message_first_line", 20, "vmenu_warning_message_second_line", true, 0, ref unk, ref unk2, true, 0);
@@ -2031,10 +2031,10 @@ namespace vMenuClient.menus
                     {
                         while (IsControlPressed(2, 201) || IsControlPressed(2, 217) || IsDisabledControlPressed(2, 201) || IsDisabledControlPressed(2, 217))
                         {
-                            await BaseScript.Delay(0);
+                            await Delay(0);
                         }
 
-                        await BaseScript.Delay(100);
+                        await Delay(100);
                         menu.OpenMenu();
                     }
                     else // otherwise cancel and go back to the editor.
@@ -2134,7 +2134,7 @@ namespace vMenuClient.menus
                         RequestModel(model);
                         while (!HasModelLoaded(model))
                         {
-                            await BaseScript.Delay(0);
+                            await Delay(0);
                         }
                     }
 
@@ -2169,7 +2169,7 @@ namespace vMenuClient.menus
                         RequestModel(model);
                         while (!HasModelLoaded(model))
                         {
-                            await BaseScript.Delay(0);
+                            await Delay(0);
                         }
                     }
 
@@ -2247,7 +2247,7 @@ namespace vMenuClient.menus
                     RequestModel(currentCharacter.ModelHash);
                     while (!HasModelLoaded(currentCharacter.ModelHash))
                     {
-                        await BaseScript.Delay(0);
+                        await Delay(0);
                     }
                 }
                 var maxHealth = Game.PlayerPed.MaxHealth;
@@ -2393,7 +2393,7 @@ namespace vMenuClient.menus
                                 UpdateSavedPedsMenu();
                                 while (!MenuController.IsAnyMenuOpen())
                                 {
-                                    await BaseScript.Delay(0);
+                                    await Delay(0);
                                 }
                                 manageSavedCharacterMenu.GoBack();
                             }

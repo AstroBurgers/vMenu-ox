@@ -133,7 +133,7 @@ namespace vMenuClient
         public InfinityPlayerList(PlayerList playerList)
         {
             this.playerList = playerList;
-            this.remotePlayerList = new Dictionary<int, InfinityPlayer>();
+            remotePlayerList = new Dictionary<int, InfinityPlayer>();
         }
 
         private IEnumerator<IPlayer> GetEnumeratorInternal()

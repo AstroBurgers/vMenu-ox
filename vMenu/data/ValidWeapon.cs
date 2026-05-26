@@ -60,7 +60,7 @@ namespace vMenuClient.data
 
     public class DictionaryConverter : JsonConverter<Dictionary<string, uint>>
     {
-        public override Dictionary<string, uint> ReadJson(JsonReader reader, System.Type objectType, Dictionary<string, uint> existingValue, bool hasExistingValue, JsonSerializer serializer)
+        public override Dictionary<string, uint> ReadJson(JsonReader reader, Type objectType, Dictionary<string, uint> existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
             var token = JToken.Load(reader);
             
@@ -164,7 +164,11 @@ namespace vMenuClient.data
             {
                 var realName = weapon.Key;
                 var localizedName = weapon.Value;
-                if (realName == "weapon_unarmed") continue;
+                if (realName == "weapon_unarmed")
+                {
+                    continue;
+                }
+
                 var hash = (uint)GetHashKey(realName);
                 var componentHashes = new Dictionary<string, uint>();
                 var weaponComponents = weaponComponentNames;

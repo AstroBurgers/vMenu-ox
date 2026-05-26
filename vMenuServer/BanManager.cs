@@ -159,7 +159,11 @@ namespace vMenuServer
             // Find any bans with matching player identifiers.
             var record = records.Find(br =>
             {
-                if (player == null) return false;
+                if (player == null)
+                {
+                    return false;
+                }
+
                 return br.identifiers.Any(identifier =>
                 {
                     return player.Identifiers.Contains(identifier);

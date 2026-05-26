@@ -78,7 +78,11 @@ namespace vMenuClient.menus
         [EventHandler("onClientResourceStart")]
         public void onClientResourceStart(string resName)
         {
-            if (resName != GetCurrentResourceName()) return;
+            if (resName != GetCurrentResourceName())
+            {
+                return;
+            }
+
             AddStateBagChangeHandler("vMenu:engineSound", null,
                 new Action<string, string, dynamic, int, bool>
                     (HandleVehicleSoundChange));
@@ -88,8 +92,16 @@ namespace vMenuClient.menus
             bool replicated)
         {
             var entity = GetEntityFromStateBagName(bagName);
-            if (entity == 0) return;
-            if (!IsEntityAVehicle(entity)) return;
+            if (entity == 0)
+            {
+                return;
+            }
+
+            if (!IsEntityAVehicle(entity))
+            {
+                return;
+            }
+
             ForceUseAudioGameObject(entity, value);
         }
 
@@ -101,7 +113,10 @@ namespace vMenuClient.menus
             double min = -1f, double max = -1f)
         {
             var veh = GetVehicle();
-            if (veh == null || !veh.Exists()) return;
+            if (veh == null || !veh.Exists())
+            {
+                return;
+            }
 
             var isInteger = field.StartsWith("n");
             var current = isInteger
@@ -127,13 +142,23 @@ namespace vMenuClient.menus
                 var input = await GetUserInput(title, current.ToString());
                 if (!float.TryParse(input, out parsedValue))
                 {
-                    if (!string.IsNullOrEmpty(input)) Notify.Error("Invalid input.");
+                    if (!string.IsNullOrEmpty(input))
+                    {
+                        Notify.Error("Invalid input.");
+                    }
+
                     return;
                 }
             }
 
-            if (isInteger) SetVehicleHandlingInt(veh.Handle, "CHandlingData", field, (int)parsedValue);
-            else SetVehicleHandlingFloat(veh.Handle, "CHandlingData", field, parsedValue);
+            if (isInteger)
+            {
+                SetVehicleHandlingInt(veh.Handle, "CHandlingData", field, (int)parsedValue);
+            }
+            else
+            {
+                SetVehicleHandlingFloat(veh.Handle, "CHandlingData", field, parsedValue);
+            }
 
             item.Label = parsedValue.ToString() + suffix;
             Notify.Success($"Set {item.Text} to {parsedValue.ToString()}{suffix}");
@@ -1190,7 +1215,7 @@ namespace vMenuClient.menus
                                     {
                                         //vehicle.MaxSpeed = outFloat;
                                         SetEntityMaxSpeed(vehicle.Handle, 500.01f);
-                                        await BaseScript.Delay(0);
+                                        await Delay(0);
                                         SetEntityMaxSpeed(vehicle.Handle, outFloat + 0.01f);
                                         if (ShouldUseMetricMeasurements()) // kph
                                         {
@@ -1206,7 +1231,7 @@ namespace vMenuClient.menus
                                     else if (int.TryParse(inputSpeed, out var outInt))
                                     {
                                         SetEntityMaxSpeed(vehicle.Handle, 500.01f);
-                                        await BaseScript.Delay(0);
+                                        await Delay(0);
                                         SetEntityMaxSpeed(vehicle.Handle, outInt + 0.01f);
                                         if (ShouldUseMetricMeasurements()) // kph
                                         {
@@ -2256,84 +2281,169 @@ namespace vMenuClient.menus
                 string fieldName = null;
                 int? value = null;
 
-                if (item == massBtn) await HandleVehicleStat(item, "fMass", "Set Mass", "kg");
+                if (item == massBtn)
+                {
+                    await HandleVehicleStat(item, "fMass", "Set Mass", "kg");
+                }
                 else if (item == dragCoeffBtn)
+                {
                     await HandleVehicleStat(item, "fInitialDragCoeff", "Set Drag Coefficient", "x", 10.0, 120.0);
+                }
                 else if (item == downforceBtn)
+                {
                     await HandleVehicleStat(item, "fDownForceModifier", "Set Downforce", "x");
+                }
                 else if (item == submergedBtn)
+                {
                     await HandleVehicleStat(item, "fPercentSubmerged", "Set Submerged", "%", 0, 100);
+                }
                 else if (item == driveBiasBtn)
+                {
                     await HandleVehicleStat(item, "fDriveBiasFront", "Set Drive Bias", "", 0.0, 1.0);
+                }
                 else if (item == driveGearsBtn)
+                {
                     await HandleVehicleStat(item, "nInitialDriveGears", "Set Gears", "", 0, 10);
-                else if (item == driveForceBtn) await HandleVehicleStat(item, "fInitialDriveForce", "Set Drive Force");
+                }
+                else if (item == driveForceBtn)
+                {
+                    await HandleVehicleStat(item, "fInitialDriveForce", "Set Drive Force");
+                }
                 else if (item == driveInertiaBtn)
+                {
                     await HandleVehicleStat(item, "fDriveInertia", "Set Drive Inertia", "", 0.01, 2.0);
+                }
                 else if (item == clutchRateUpBtn)
+                {
                     await HandleVehicleStat(item, "fClutchChangeRateScaleUpShift", "Set Clutch Change Rate Up Shift",
                         "x", 0.0, 13.0);
+                }
                 else if (item == clutchRateDownBtn)
+                {
                     await HandleVehicleStat(item, "fClutchChangeRateScaleDownShift",
                         "Set Clutch Change Rate Down Shift", "x", 0.0, 13.0);
-                else if (item == driveMaxFlatBtn) await HandleVehicleStat(item, "fInitialDriveMaxFlatVel", "");
-                else if (item == brakeForceBtn) await HandleVehicleStat(item, "fBrakeForce", "Change Brake Force", "x");
+                }
+                else if (item == driveMaxFlatBtn)
+                {
+                    await HandleVehicleStat(item, "fInitialDriveMaxFlatVel", "");
+                }
+                else if (item == brakeForceBtn)
+                {
+                    await HandleVehicleStat(item, "fBrakeForce", "Change Brake Force", "x");
+                }
                 else if (item == brakeBiasBtn)
+                {
                     await HandleVehicleStat(item, "fBrakeBiasFront", "Change Brake Bias", "", 0.0, 1.0);
+                }
                 else if (item == handbrakeBtn)
+                {
                     await HandleVehicleStat(item, "fHandBrakeForce", "Change Handbrke Force", "");
+                }
                 else if (item == steeringLockBtn)
+                {
                     await HandleVehicleStat(item, "fSteeringLock", "Change Steering Lock", "", 1.0, 90.0);
+                }
                 else if (item == tractionCurveMaxBtn)
+                {
                     await HandleVehicleStat(item, "fTractionCurveMax", "Change Traction Curve Max", "");
+                }
                 else if (item == tractionCurveMinBtn)
+                {
                     await HandleVehicleStat(item, "fTractionCurveMin", "Change Traction Curve Min", "");
+                }
                 else if (item == tractionCurveLateralBtn)
+                {
                     await HandleVehicleStat(item, "fTractionCurveLateral", "Change Traction Curve Lateral", "");
+                }
                 else if (item == tractionSpringDeltaBtn)
+                {
                     await HandleVehicleStat(item, "fTractionSpringDeltaMax", "Change Traction Spring Delta", "");
+                }
                 else if (item == lowSpeedTractionLossBtn)
+                {
                     await HandleVehicleStat(item, "fLowSpeedTractionLossMult", "Change Low Speed Traction Loss", "");
+                }
                 else if (item == camberStiffBtn)
+                {
                     await HandleVehicleStat(item, "fCamberStiffnesss", "Change Camber Stiffness", "");
+                }
                 else if (item == tractionBiasFrontBtn)
+                {
                     await HandleVehicleStat(item, "fTractionBiasFront", "Change Traction Bias", "", 0.01, 1.0);
+                }
                 else if (item == tractionLossBtn)
+                {
                     await HandleVehicleStat(item, "fTractionLossMult", "Change Traction Loss", "");
+                }
                 else if (item == suspensionForceBtn)
+                {
                     await HandleVehicleStat(item, "fSuspensionForce", "Change Suspension Force", "");
+                }
                 else if (item == suspensionCompBtn)
+                {
                     await HandleVehicleStat(item, "fSuspensionCompDamp", "Change Suspension Compression", "");
+                }
                 else if (item == suspensionReboundBtn)
+                {
                     await HandleVehicleStat(item, "fSuspensionReboundDamp", "Change Suspension Redbound", "");
+                }
                 else if (item == suspensionUpperBtn)
+                {
                     await HandleVehicleStat(item, "fSuspensionUpperLimit", "Change Upper Suspension", "");
+                }
                 else if (item == suspensionLowerBtn)
+                {
                     await HandleVehicleStat(item, "fSuspensionLowerLimit", "Change Lower Suspension", "");
+                }
                 else if (item == suspensionRaiseBtn)
+                {
                     await HandleVehicleStat(item, "fSuspensionRaise", "Change Suspension Raise", "");
+                }
                 else if (item == suspensionBiasBtn)
+                {
                     await HandleVehicleStat(item, "fSuspensionBiasFront", "Change Suspension Bias", "");
+                }
                 else if (item == antiRollBtn)
+                {
                     await HandleVehicleStat(item, "fAntiRollBarForce", "Change Anti Rollbar Force", "");
+                }
                 else if (item == antiRollBiasBtn)
+                {
                     await HandleVehicleStat(item, "fAntiRollBarBiasFront", "Change Anti Rollbar Bias", "", 0.0, 1.0);
+                }
                 else if (item == rollCentreFrontBtn)
+                {
                     await HandleVehicleStat(item, "fRollCentreHeightFront", "Change Roll Centre Height Front", "");
+                }
                 else if (item == rollCentreRearBtn)
+                {
                     await HandleVehicleStat(item, "fRollCentreHeightRear", "Change Roll Centre Height Rear", "");
+                }
                 else if (item == collisionDmgBtn)
+                {
                     await HandleVehicleStat(item, "fCollisionDamageMult", "Change Collision Damage", "x", 0.0, 10.0);
+                }
                 else if (item == weaponDmgBtn)
+                {
                     await HandleVehicleStat(item, "fWeaponDamageMult", "Change Weapon Damage", "x", 0.0, 10.0);
+                }
                 else if (item == deformDmgBtn)
+                {
                     await HandleVehicleStat(item, "fDeformationDamageMult", "Change Deformation Damage", "x", 0.0,
                         10.0);
+                }
                 else if (item == engineDmgBtn)
+                {
                     await HandleVehicleStat(item, "fEngineDamageMult", "Change Engine Damage", "x", 0.0, 10.0);
+                }
                 else if (item == petrolVolBtn)
+                {
                     await HandleVehicleStat(item, "fPetrolTankVolume", "Change Petrol Tank Volume", "");
-                else if (item == oilVolBtn) await HandleVehicleStat(item, "fOilVolume", "Change Oil Volume", "");
+                }
+                else if (item == oilVolBtn)
+                {
+                    await HandleVehicleStat(item, "fOilVolume", "Change Oil Volume", "");
+                }
 
                 if (fieldName != null && value != null)
                 {
@@ -2472,7 +2582,10 @@ namespace vMenuClient.menus
                                 // Create the checkbox label
                                 string extraLabel;
                                 if (!extraLabels.TryGetValue(extra, out extraLabel))
+                                {
                                     extraLabel = $"Extra #{extra}";
+                                }
+
                                 // Create a checkbox for it.
                                 var extraCheckbox =
                                     new MenuCheckboxItem(extraLabel, extra.ToString(), veh.IsExtraOn(extra));
