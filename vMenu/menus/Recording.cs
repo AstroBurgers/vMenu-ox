@@ -33,7 +33,7 @@ namespace vMenuClient.menus
             menu.AddMenuItem(stopRec);
             menu.AddMenuItem(openEditor);
 
-            menu.OnItemSelect += async (sender, item, index) =>
+            menu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == startRec)
                 {

@@ -171,7 +171,7 @@ namespace vMenuClient.menus
                 parachuteMenu.AddMenuItem(primaryChutes);
                 parachuteMenu.AddMenuItem(secondaryChutes);
 
-                parachuteMenu.OnItemSelect += (sender, item, index) =>
+                parachuteMenu.OnItemSelect += (_, item, _) =>
                 {
                     if (item == togglePrimary)
                     {
@@ -194,7 +194,7 @@ namespace vMenuClient.menus
                     }
                 };
 
-                parachuteMenu.OnCheckboxChange += (sender, item, index, _checked) =>
+                parachuteMenu.OnCheckboxChange += (_, item, _, _checked) =>
                 {
                     if (item == unlimitedParachutes)
                     {
@@ -371,7 +371,7 @@ namespace vMenuClient.menus
                         statsMenu.AddMenuItem(dmgMultBtn);
                         statsMenu.AddMenuItem(shakeAmplitudeBtn);
 
-                        statsMenu.OnItemSelect += async (sender, item, index) =>
+                        statsMenu.OnItemSelect += async (_, item, _) =>
                         {
                             var hash = weapon.Hash;
 
@@ -429,7 +429,7 @@ namespace vMenuClient.menus
                     #endregion
 
                     #region Handle weapon specific list changes
-                    weaponMenu.OnListIndexChange += (sender, item, oldIndex, newIndex, itemIndex) =>
+                    weaponMenu.OnListIndexChange += (sender, item, _, newIndex, _) =>
                     {
                         if (item == weaponTints)
                         {
@@ -446,7 +446,7 @@ namespace vMenuClient.menus
                     #endregion
 
                     #region Handle weapon specific button presses
-                    weaponMenu.OnItemSelect += (sender, item, index) =>
+                    weaponMenu.OnItemSelect += (sender, item, _) =>
                     {
                         var info = weaponInfo[sender];
                         var hash = info.Hash;
@@ -550,7 +550,7 @@ namespace vMenuClient.menus
                             weaponMenu.AddMenuItem(compItem);
 
                             #region Handle component button presses
-                            weaponMenu.OnCheckboxChange += (sender, item, index, _checked) =>
+                            weaponMenu.OnCheckboxChange += (sender, item, _, _) =>
                             {
                                 if (item != compItem) return;
                                 var weaponData = weaponInfo[sender];
@@ -726,7 +726,7 @@ namespace vMenuClient.menus
             #endregion
 
             #region Handle button presses
-            menu.OnItemSelect += async (sender, item, index) =>
+            menu.OnItemSelect += async (_, item, _) =>
             {
                 var ped = Game.PlayerPed;
                 if (item == getAllWeapons)
@@ -789,7 +789,7 @@ namespace vMenuClient.menus
             #endregion
 
             #region Handle checkbox changes
-            menu.OnCheckboxChange += (sender, item, index, _checked) =>
+            menu.OnCheckboxChange += (_, item, _, _checked) =>
             {
                 if (item == noReload)
                 {
@@ -817,14 +817,14 @@ namespace vMenuClient.menus
                 }
             }
 
-            handGuns.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
-            rifles.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
-            shotguns.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
-            smgs.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
-            throwables.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
-            melee.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
-            heavy.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
-            snipers.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => { OnIndexChange(sender, newItem); };
+            handGuns.OnIndexChange += (sender, _, newItem, _, _) => { OnIndexChange(sender, newItem); };
+            rifles.OnIndexChange += (sender, _, newItem, _, _) => { OnIndexChange(sender, newItem); };
+            shotguns.OnIndexChange += (sender, _, newItem, _, _) => { OnIndexChange(sender, newItem); };
+            smgs.OnIndexChange += (sender, _, newItem, _, _) => { OnIndexChange(sender, newItem); };
+            throwables.OnIndexChange += (sender, _, newItem, _, _) => { OnIndexChange(sender, newItem); };
+            melee.OnIndexChange += (sender, _, newItem, _, _) => { OnIndexChange(sender, newItem); };
+            heavy.OnIndexChange += (sender, _, newItem, _, _) => { OnIndexChange(sender, newItem); };
+            snipers.OnIndexChange += (sender, _, newItem, _, _) => { OnIndexChange(sender, newItem); };
 
             handGuns.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };
             rifles.OnMenuOpen += (sender) => { OnIndexChange(sender, sender.GetCurrentMenuItem()); };

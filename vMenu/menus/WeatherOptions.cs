@@ -108,7 +108,7 @@ namespace vMenuClient.menus
                 menu.AddMenuItem(removeclouds);
             }
 
-            menu.OnItemSelect += async (sender, item, index2) =>
+            menu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == removeclouds)
                 {
@@ -129,7 +129,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            menu.OnCheckboxChange += async (sender, item, index, _checked) =>
+            menu.OnCheckboxChange += async (_, item, _, _checked) =>
             {
                 if (item == dynamicWeatherEnabled)
                 {

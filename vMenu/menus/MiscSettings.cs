@@ -200,7 +200,7 @@ namespace vMenuClient.menus
             MenuController.AddSubmenu(menu, connectionSubmenu);
             MenuController.BindMenuItem(menu, connectionSubmenu, connectionSubmenuBtn);
 
-            keybindMenu.OnCheckboxChange += (sender, item, index, _checked) =>
+            keybindMenu.OnCheckboxChange += (_, item, _, _checked) =>
             {
                 if (item == kbTpToWaypoint)
                 {
@@ -223,7 +223,7 @@ namespace vMenuClient.menus
                     KbPointKeys = _checked;
                 }
             };
-            keybindMenu.OnItemSelect += (sender, item, index) =>
+            keybindMenu.OnItemSelect += (_, item, _) =>
             {
                 if (item == backBtn)
                 {
@@ -231,7 +231,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            connectionSubmenu.OnItemSelect += (sender, item, index) =>
+            connectionSubmenu.OnItemSelect += (_, item, _) =>
             {
                 if (item == quitGame)
                 {
@@ -270,7 +270,7 @@ namespace vMenuClient.menus
                 else if (item == disconnectFromServer)
                 {
 
-                    RegisterCommand("disconnect", new Action<dynamic, dynamic, dynamic>((a, b, c) => { }), false);
+                    RegisterCommand("disconnect", new Action<dynamic, dynamic, dynamic>((_, _, _) => { }), false);
                     ExecuteCommand("disconnect");
                 }
             };
@@ -285,7 +285,7 @@ namespace vMenuClient.menus
                 var tptowp = new MenuItem("Teleport To Waypoint", "Teleport to the waypoint on your map.");
                 var tpToCoord = new MenuItem("Teleport To Coords", "Enter x, y, z coordinates and you will be teleported to that location.");
                 var saveLocationBtn = new MenuItem("Save Teleport Location", "Adds your current location to the teleport locations menu and saves it on the server.");
-                teleportOptionsMenu.OnItemSelect += async (sender, item, index) =>
+                teleportOptionsMenu.OnItemSelect += async (_, item, _) =>
                 {
                     // Teleport to waypoint.
                     if (item == tptowp)
@@ -376,7 +376,7 @@ namespace vMenuClient.menus
                     MenuController.BindMenuItem(teleportOptionsMenu, teleportMenu, teleportMenuBtn);
                     teleportMenuBtn.Label = "→→→";
 
-                    teleportMenu.OnMenuOpen += (sender) =>
+                    teleportMenu.OnMenuOpen += (_) =>
                     {
                         if (teleportMenu.Size != TpLocations.Count())
                         {
@@ -393,7 +393,7 @@ namespace vMenuClient.menus
                         }
                     };
 
-                    teleportMenu.OnItemSelect += async (sender, item, index) =>
+                    teleportMenu.OnItemSelect += async (_, item, _) =>
                     {
                         if (item.ItemData is vMenuShared.ConfigManager.TeleportLocation tl)
                         {
@@ -448,7 +448,7 @@ namespace vMenuClient.menus
             developerToolsMenu.AddMenuItem(enableTimeCycle);
             developerToolsMenu.AddMenuItem(timeCycleIntensity);
 
-            developerToolsMenu.OnSliderPositionChange += (sender, item, oldPos, newPos, itemIndex) =>
+            developerToolsMenu.OnSliderPositionChange += (_, item, _, newPos, _) =>
             {
                 if (item == timeCycleIntensity)
                 {
@@ -468,7 +468,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            developerToolsMenu.OnListIndexChange += (sender, item, oldIndex, newIndex, itemIndex) =>
+            developerToolsMenu.OnListIndexChange += (_, item, _, _, _) =>
             {
                 if (item == timeCycles)
                 {
@@ -484,7 +484,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            developerToolsMenu.OnItemSelect += (sender, item, index) =>
+            developerToolsMenu.OnItemSelect += (_, item, _) =>
             {
                 if (item == clearArea)
                 {
@@ -515,7 +515,7 @@ namespace vMenuClient.menus
                 };
             };
 
-            developerToolsMenu.OnCheckboxChange += (sender, item, index, _checked) =>
+            developerToolsMenu.OnCheckboxChange += (_, item, _, _checked) =>
             {
                 if (item == vehModelDimensions)
                 {
@@ -569,7 +569,7 @@ namespace vMenuClient.menus
                 entitySpawnerMenu.AddMenuItem(confirmAndDuplicate);
                 entitySpawnerMenu.AddMenuItem(cancelEntity);
 
-                entitySpawnerMenu.OnItemSelect += async (sender, item, index) =>
+                entitySpawnerMenu.OnItemSelect += async (_, item, _) =>
                 {
                     if (item == spawnNewEntity)
                     {
@@ -658,7 +658,7 @@ namespace vMenuClient.menus
                 menu.AddMenuItem(nightVision);
                 RegisterKeyMapping("toggle-nv", "Night Vision", "keyboard", "");
                 var nvEnabled = false;
-                RegisterCommand("toggle-nv", new Action<int, List<object>, string>((source, args, rawCommand) =>
+                RegisterCommand("toggle-nv", new Action<int, List<object>, string>((_, _, _) =>
                 {
                     if(!CanDoInteraction("nightvision") && !nvEnabled)
                     {
@@ -676,7 +676,7 @@ namespace vMenuClient.menus
                 menu.AddMenuItem(thermalVision);
                 RegisterKeyMapping("toggle-tv", "Thermal Vision", "keyboard", "");
                 var tvEnabled = false;
-                RegisterCommand("toggle-tv", new Action<int, List<object>, string>((source, args, rawCommand) =>
+                RegisterCommand("toggle-tv", new Action<int, List<object>, string>((_, _, _) =>
                 {
                     if (!CanDoInteraction("thermalvision") && !tvEnabled)
                     {
@@ -732,7 +732,7 @@ namespace vMenuClient.menus
             menu.AddMenuItem(saveSettings);
 
             // Handle checkbox changes.
-            menu.OnCheckboxChange += (sender, item, index, _checked) =>
+            menu.OnCheckboxChange += (_, item, _, _checked) =>
             {
                 if (item == rightAlignMenu)
                 {
@@ -880,7 +880,7 @@ namespace vMenuClient.menus
             };
 
             // Handle button presses.
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 // export data
                 if (item == exportData)

@@ -132,7 +132,7 @@ namespace vMenuClient.menus
 
             var savedPed = new KeyValuePair<string, PedInfo>();
 
-            selectedSavedPedMenu.OnItemSelect += async (sender, item, index) =>
+            selectedSavedPedMenu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == spawnSavedPed)
                 {
@@ -239,8 +239,8 @@ namespace vMenuClient.menus
                 }
             }
 
-            selectedSavedPedMenu.OnIndexChange += (menu, newItem, oldItem, oldIndex, newIndex) => ResetSavedPedsMenu(false);
-            selectedSavedPedMenu.OnMenuOpen += (menu) => ResetSavedPedsMenu(true);
+            selectedSavedPedMenu.OnIndexChange += (_, _, _, _, _) => ResetSavedPedsMenu(false);
+            selectedSavedPedMenu.OnMenuOpen += (_) => ResetSavedPedsMenu(true);
 
 
             void UpdateSavedPedsMenu()
@@ -296,7 +296,7 @@ namespace vMenuClient.menus
                 UpdateSavedPedsMenu();
             };
 
-            savedPedsMenu.OnItemSelect += (_, item, __) =>
+            savedPedsMenu.OnItemSelect += (_, item, _) =>
             {
                 savedPed = item.ItemData;
                 selectedSavedPedMenu.MenuSubtitle = item.Text;
@@ -501,7 +501,7 @@ namespace vMenuClient.menus
                 animalsPedsMenu.OnItemSelect += SpawnPed;
                 otherPedsMenu.OnItemSelect += SpawnPed;
 
-                spawnPedsMenu.OnItemSelect += async (sender, item, index) =>
+                spawnPedsMenu.OnItemSelect += async (_, item, _) =>
                 {
                     if (item == spawnByNameBtn)
                     {
@@ -520,7 +520,7 @@ namespace vMenuClient.menus
 
 
             // Handle list selections.
-            menu.OnListItemSelect += (sender, item, listIndex, itemIndex) =>
+            menu.OnListItemSelect += (_, item, listIndex, _) =>
             {
                 if (item == walkingStyle)
                 {
@@ -534,7 +534,7 @@ namespace vMenuClient.menus
             };
 
             // Handle button presses.
-            menu.OnItemSelect += async (sender, item, index) =>
+            menu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == pedCustomization)
                 {
@@ -560,7 +560,7 @@ namespace vMenuClient.menus
 
             #region ped drawable list changes
             // Manage list changes.
-            pedCustomizationMenu.OnListIndexChange += (sender, item, oldListIndex, newListIndex, itemIndex) =>
+            pedCustomizationMenu.OnListIndexChange += (_, item, _, newListIndex, _) =>
             {
                 if (drawablesMenuListItems.ContainsKey(item))
                 {
@@ -588,7 +588,7 @@ namespace vMenuClient.menus
             };
 
             // Manage list selections.
-            pedCustomizationMenu.OnListItemSelect += (sender, item, listIndex, itemIndex) =>
+            pedCustomizationMenu.OnListItemSelect += (_, item, listIndex, _) =>
             {
                 if (drawablesMenuListItems.ContainsKey(item)) // drawable
                 {
@@ -618,7 +618,7 @@ namespace vMenuClient.menus
             };
             #endregion
 
-            pedCollectionsCustomizationMenu.OnListIndexChange += (_, item, oldListIndex, newListIndex, ___) =>
+            pedCollectionsCustomizationMenu.OnListIndexChange += (_, item, oldListIndex, newListIndex, _) =>
             {
                 string collectionName = item.ItemData;
                 var pedHandle = Game.PlayerPed.Handle;
@@ -673,7 +673,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            pedCollectionsCustomizationMenu.OnListItemSelect += (_, item, listIndex, __) =>
+            pedCollectionsCustomizationMenu.OnListItemSelect += (_, item, listIndex, _) =>
             {
                 var pedHandle = Game.PlayerPed.Handle;
                 string collectionName = item.ItemData;
@@ -715,7 +715,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            pedCollectionsMenu.OnItemSelect += (_, menuItem, ___) =>
+            pedCollectionsMenu.OnItemSelect += (_, menuItem, _) =>
             {
                 RefreshCollectionsDrawables(menuItem.ItemData);
             };

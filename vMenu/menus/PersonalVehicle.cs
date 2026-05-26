@@ -121,7 +121,7 @@ namespace vMenuClient.menus
 
 
             // Handle list presses
-            menu.OnListItemSelect += (sender, item, itemIndex, index) =>
+            menu.OnListItemSelect += (_, item, itemIndex, _) =>
             {
                 var veh = CurrentPersonalVehicle;
                 if (veh != null && veh.Exists())
@@ -172,7 +172,7 @@ namespace vMenuClient.menus
             };
 
             // Handle checkbox changes
-            menu.OnCheckboxChange += (sender, item, index, _checked) =>
+            menu.OnCheckboxChange += (_, item, _, _checked) =>
             {
                 if (item == enableBlip)
                 {
@@ -231,7 +231,7 @@ namespace vMenuClient.menus
             };
 
             // Handle button presses.
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 if (item == setVehice)
                 {
@@ -364,7 +364,7 @@ namespace vMenuClient.menus
             VehicleDoorsMenu.AddMenuItem(removeDoorList);
             VehicleDoorsMenu.AddMenuItem(deleteDoors);
 
-            VehicleDoorsMenu.OnListItemSelect += (sender, item, index, itemIndex) =>
+            VehicleDoorsMenu.OnListItemSelect += (_, item, index, _) =>
             {
                 var veh = CurrentPersonalVehicle;
                 if (veh != null && veh.Exists())
@@ -386,7 +386,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            VehicleDoorsMenu.OnItemSelect += (sender, item, index) =>
+            VehicleDoorsMenu.OnItemSelect += (_, item, index) =>
             {
                 var veh = CurrentPersonalVehicle;
                 if (veh != null && veh.Exists() && !veh.IsDead)

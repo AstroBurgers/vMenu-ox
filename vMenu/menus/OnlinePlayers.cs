@@ -95,13 +95,13 @@ namespace vMenuClient.menus
                 ban.LeftIcon = MenuItem.Icon.WARNING;
             }
 
-            playerMenu.OnMenuClose += (sender) =>
+            playerMenu.OnMenuClose += (_) =>
             {
                 playerMenu.RefreshIndex();
                 ban.Label = "";
             };
 
-            playerMenu.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) =>
+            playerMenu.OnIndexChange += (_, _, _, _, _) =>
             {
                 ban.Label = "";
             };
@@ -303,7 +303,7 @@ namespace vMenuClient.menus
             };
 
             // handle button presses in the player list.
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
                 {
                     var baseId = int.Parse(item.Label.Replace(" →→→", "").Replace("Server #", ""));
                     var player = MainMenu.PlayersList.FirstOrDefault(p => p.ServerId == baseId);

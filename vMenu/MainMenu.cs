@@ -120,7 +120,7 @@ namespace vMenuClient
             #endregion
             #region keymapping
             var KeyMappingID = GetKeyMappingId();
-            RegisterCommand($"vMenu:{KeyMappingID}:NoClip", new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
+            RegisterCommand($"vMenu:{KeyMappingID}:NoClip", new Action<dynamic, List<dynamic>, string>((dynamic _, List<dynamic> _, string _) =>
             {
                 if (IsAllowed(Permission.NoClip))
                 {
@@ -168,13 +168,13 @@ namespace vMenuClient
             #endregion
             if (EnableExperimentalFeatures)
             {
-                RegisterCommand("testped", new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
+                RegisterCommand("testped", new Action<dynamic, List<dynamic>, string>((dynamic _, List<dynamic> _, string _) =>
                 {
                     var data = Game.PlayerPed.GetHeadBlendData();
                     Debug.WriteLine(JsonConvert.SerializeObject(data, Formatting.Indented));
                 }), false);
 
-                RegisterCommand("tattoo", new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
+                RegisterCommand("tattoo", new Action<dynamic, List<dynamic>, string>((dynamic _, List<dynamic> args, string _) =>
                 {
                     if (args != null && args[0] != null && args[1] != null)
                     {
@@ -185,13 +185,13 @@ namespace vMenuClient
                     }
                 }), false);
 
-                RegisterCommand("clearfocus", new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
+                RegisterCommand("clearfocus", new Action<dynamic, List<dynamic>, string>((dynamic _, List<dynamic> _, string _) =>
                 {
                     SetNuiFocus(false, false);
                 }), false);
             }
 
-            RegisterCommand("vmenuclient", new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
+            RegisterCommand("vmenuclient", new Action<dynamic, List<dynamic>, string>((dynamic _, List<dynamic> args, string _) =>
             {
                 if (args != null)
                 {
@@ -505,7 +505,7 @@ namespace vMenuClient
                 StatSetFloat((uint)GetHashKey("MP0_PLAYER_MENTAL_STATE"), 0f, true);    // Mental State
             }
 
-            RegisterCommand($"vMenu:{GetKeyMappingId()}:MenuToggle", new Action<dynamic, List<dynamic>, string>((dynamic source, List<dynamic> args, string rawCommand) =>
+            RegisterCommand($"vMenu:{GetKeyMappingId()}:MenuToggle", new Action<dynamic, List<dynamic>, string>((dynamic _, List<dynamic> _, string _) =>
             {
                 if (MenuEnabled)
                 {
@@ -636,7 +636,7 @@ namespace vMenuClient
                     Label = "→→→"
                 };
                 AddMenu(Menu, menu, button);
-                Menu.OnItemSelect += async (sender, item, index) =>
+                Menu.OnItemSelect += async (_, item, _) =>
                 {
                     if (item == button)
                     {
@@ -656,7 +656,7 @@ namespace vMenuClient
                     Label = "→→→"
                 };
                 AddMenu(Menu, menu, button);
-                Menu.OnItemSelect += (sender, item, index) =>
+                Menu.OnItemSelect += (_, item, _) =>
                 {
                     if (item == button)
                     {

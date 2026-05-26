@@ -373,7 +373,7 @@ namespace vMenuClient.menus
             VehicleHandlingMenu = new Menu("Handling Menu", "Vehicle Handing");
             VehicleModMenu.InstructionalButtons.Add(Control.Jump, "Toggle Vehicle Doors");
             VehicleModMenu.ButtonPressHandlers.Add(new Menu.ButtonPressHandler(Control.Jump,
-                Menu.ControlPressCheckType.JUST_PRESSED, new Action<Menu, Control>((m, c) =>
+                Menu.ControlPressCheckType.JUST_PRESSED, new Action<Menu, Control>((_, _) =>
                 {
                     var veh = GetVehicle();
                     if (veh != null && veh.Exists() && !veh.IsDead && veh.Driver == Game.PlayerPed)
@@ -447,7 +447,7 @@ namespace vMenuClient.menus
                 vehGodMenu.AddMenuItem(godRamp);
                 vehGodMenu.AddMenuItem(godAutoRepair);
 
-                vehGodMenu.OnCheckboxChange += (sender, item, index, _checked) =>
+                vehGodMenu.OnCheckboxChange += (_, item, _, _checked) =>
                 {
                     if (item == godInvincible)
                     {
@@ -671,7 +671,7 @@ namespace vMenuClient.menus
 
             DeleteConfirmMenu.AddMenuItem(deleteNoBtn);
             DeleteConfirmMenu.AddMenuItem(deleteYesBtn);
-            DeleteConfirmMenu.OnItemSelect += (sender, item, index) =>
+            DeleteConfirmMenu.OnItemSelect += (_, item, _) =>
             {
                 if (item == deleteNoBtn)
                 {
@@ -723,7 +723,7 @@ namespace vMenuClient.menus
             #region Handle button presses
 
             // Manage button presses.
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 if (item == deleteBtn) // reset the index so that "no" / "cancel" will always be selected by default.
                 {
@@ -825,7 +825,7 @@ namespace vMenuClient.menus
 
             #region Handle checkbox changes.
 
-            menu.OnCheckboxChange += (sender, item, index, _checked) =>
+            menu.OnCheckboxChange += (_, item, _, _checked) =>
             {
                 // Create a vehicle object.
                 var vehicle = GetVehicle();
@@ -978,7 +978,7 @@ namespace vMenuClient.menus
             #region Handle List Changes.
 
             // Handle list changes.
-            menu.OnListIndexChange += (sender, item, oldIndex, newIndex, itemIndex) =>
+            menu.OnListIndexChange += (_, item, _, newIndex, _) =>
             {
                 if (GetVehicle() != null && GetVehicle().Exists())
                 {
@@ -1058,7 +1058,7 @@ namespace vMenuClient.menus
 
             #region Handle List Items Selected
 
-            menu.OnListItemSelect += async (sender, item, listIndex, itemIndex) =>
+            menu.OnListItemSelect += async (_, item, listIndex, _) =>
             {
                 // Set dirt level
                 if (item == setDirtLevel)
@@ -1404,7 +1404,7 @@ namespace vMenuClient.menus
 
             VehicleColorsMenu.AddMenuItem(vehicleEnveffScale);
 
-            VehicleColorsMenu.OnSliderPositionChange += (m, sliderItem, oldPosition, newPosition, itemIndex) =>
+            VehicleColorsMenu.OnSliderPositionChange += (_, sliderItem, _, newPosition, _) =>
             {
                 var veh = GetVehicle();
                 if (veh != null && veh.Driver == Game.PlayerPed && !veh.IsDead)
@@ -1740,7 +1740,7 @@ namespace vMenuClient.menus
             VehicleDoorsMenu.AddMenuItem(removeDoorList);
             VehicleDoorsMenu.AddMenuItem(deleteDoors);
 
-            VehicleDoorsMenu.OnListItemSelect += (sender, item, index, itemIndex) =>
+            VehicleDoorsMenu.OnListItemSelect += (_, item, index, _) =>
             {
                 var veh = GetVehicle();
                 if (veh != null && veh.Exists())
@@ -1764,7 +1764,7 @@ namespace vMenuClient.menus
             };
 
             // Handle button presses.
-            VehicleDoorsMenu.OnItemSelect += async (sender, item, index) =>
+            VehicleDoorsMenu.OnItemSelect += async (_, item, index) =>
             {
                 // Get the vehicle.
                 var veh = GetVehicle();
@@ -1857,7 +1857,7 @@ namespace vMenuClient.menus
             VehicleWindowsMenu.AddMenuItem(fwd);
             VehicleWindowsMenu.AddMenuItem(rwu);
             VehicleWindowsMenu.AddMenuItem(rwd);
-            VehicleWindowsMenu.OnItemSelect += (sender, item, index) =>
+            VehicleWindowsMenu.OnItemSelect += (_, item, _) =>
             {
                 var veh = GetVehicle();
                 if (veh != null && veh.Exists() && !veh.IsDead)
@@ -1889,7 +1889,7 @@ namespace vMenuClient.menus
 
             #region Vehicle Liveries Submenu Stuff
 
-            menu.OnItemSelect += (sender, item, idex) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 // If the liverys menu button is selected.
                 if (item == liveriesMenuBtn)
@@ -1919,7 +1919,7 @@ namespace vMenuClient.menus
                                     GetVehicleLivery(veh.Handle), "Choose a livery for this vehicle.");
                                 VehicleLiveriesMenu.AddMenuItem(liveryListItem);
                                 VehicleLiveriesMenu.OnListIndexChange +=
-                                    (_menu, listItem, oldIndex, newIndex, itemIndex) =>
+                                    (_, listItem, _, newIndex, _) =>
                                     {
                                         if (listItem == liveryListItem)
                                         {
@@ -1940,7 +1940,7 @@ namespace vMenuClient.menus
                                     Label = "Go Back"
                                 };
                                 VehicleLiveriesMenu.AddMenuItem(backBtn);
-                                VehicleLiveriesMenu.OnItemSelect += (sender2, item2, index2) =>
+                                VehicleLiveriesMenu.OnItemSelect += (_, item2, _) =>
                                 {
                                     if (item2 == backBtn)
                                     {
@@ -1968,7 +1968,7 @@ namespace vMenuClient.menus
 
             #region Vehicle Mod Submenu Stuff
 
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 // When the mod submenu is openend, reset all items in there.
                 if (item == modMenuBtn)
@@ -2097,7 +2097,7 @@ namespace vMenuClient.menus
             VehicleHandlingMenu.AddMenuItem(petrolVolBtn);
             VehicleHandlingMenu.AddMenuItem(oilVolBtn);
 
-            VehicleHandlingMenu.OnMenuOpen += (sender) =>
+            VehicleHandlingMenu.OnMenuOpen += (_) =>
             {
                 var veh = GetVehicle();
                 if (veh != null && veh.Exists())
@@ -2250,7 +2250,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            VehicleHandlingMenu.OnItemSelect += async (sender, item, index) =>
+            VehicleHandlingMenu.OnItemSelect += async (_, item, _) =>
             {
                 var veh = GetVehicle();
                 string fieldName = null;
@@ -2378,7 +2378,7 @@ namespace vMenuClient.menus
             VehicleEngineSoundMenu.AddMenuItem(soundMenuList);
             VehicleEngineSoundMenu.AddMenuItem(resetEngineSoundBtn);
 
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 if (item == engineSoundMenuBtn)
                 {
@@ -2389,7 +2389,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            VehicleEngineSoundMenu.OnItemSelect += (sender, item, index) =>
+            VehicleEngineSoundMenu.OnItemSelect += (_, _, _) =>
             {
                 var veh = GetVehicle();
 
@@ -2407,7 +2407,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            VehicleEngineSoundMenu.OnListItemSelect += (sender, item, index, itemIndex) =>
+            VehicleEngineSoundMenu.OnListItemSelect += (_, _, index, _) =>
             {
                 var veh = GetVehicle();
 
@@ -2433,7 +2433,7 @@ namespace vMenuClient.menus
             #region Vehicle Components Submenu
 
             // when the components menu is opened.
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 // If the components menu is opened.
                 if (item == componentsMenuBtn)
@@ -2490,7 +2490,7 @@ namespace vMenuClient.menus
                         {
                             var backBtn = new MenuItem("Go Back", "Go back to the Vehicle Options menu.");
                             VehicleComponentsMenu.AddMenuItem(backBtn);
-                            VehicleComponentsMenu.OnItemSelect += (sender3, item3, index3) =>
+                            VehicleComponentsMenu.OnItemSelect += (_, _, _) =>
                             {
                                 VehicleComponentsMenu.GoBack();
                             };
@@ -2502,7 +2502,7 @@ namespace vMenuClient.menus
                                 Label = "Go Back"
                             };
                             VehicleComponentsMenu.AddMenuItem(backBtn);
-                            VehicleComponentsMenu.OnItemSelect += (sender3, item3, index3) =>
+                            VehicleComponentsMenu.OnItemSelect += (_, _, _) =>
                             {
                                 VehicleComponentsMenu.GoBack();
                             };
@@ -2564,7 +2564,7 @@ namespace vMenuClient.menus
             };
 
             // when a checkbox in the components menu changes
-            VehicleComponentsMenu.OnCheckboxChange += (sender, item, index, _checked) =>
+            VehicleComponentsMenu.OnCheckboxChange += (_, item, _, _checked) =>
             {
                 // When a checkbox is checked/unchecked, get the selected checkbox item index and use that to get the component ID from the list.
                 // Then toggle that extra.
@@ -2632,7 +2632,7 @@ namespace vMenuClient.menus
 
             VehicleUnderglowMenu.AddMenuItem(underglowColor);
 
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 #region reset checkboxes state when opening the menu.
 
@@ -2704,7 +2704,7 @@ namespace vMenuClient.menus
                 #endregion
             };
             // handle item selections
-            VehicleUnderglowMenu.OnCheckboxChange += (sender, item, index, _checked) =>
+            VehicleUnderglowMenu.OnCheckboxChange += (_, item, _, _checked) =>
             {
                 if (Game.PlayerPed.IsInVehicle())
                 {
@@ -2736,7 +2736,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            VehicleUnderglowMenu.OnListIndexChange += (sender, item, oldIndex, newIndex, itemIndex) =>
+            VehicleUnderglowMenu.OnListIndexChange += (_, item, _, newIndex, _) =>
             {
                 if (item == underglowColor)
                 {
@@ -2755,7 +2755,7 @@ namespace vMenuClient.menus
 
             #region Handle menu-opening refreshing license plate
 
-            menu.OnMenuOpen += (sender) =>
+            menu.OnMenuOpen += (_) =>
             {
                 menu.GetMenuItems().ForEach((item) =>
                 {
@@ -3105,7 +3105,7 @@ namespace vMenuClient.menus
                 #region Checkbox Changes
 
                 // Handle checkbox changes.
-                VehicleModMenu.OnCheckboxChange += (sender2, item2, index2, _checked) =>
+                VehicleModMenu.OnCheckboxChange += (_, item2, _, _checked) =>
                 {
                     veh = GetVehicle();
 
@@ -3175,7 +3175,7 @@ namespace vMenuClient.menus
                 #region List Changes
 
                 // Handle list selections
-                VehicleModMenu.OnListIndexChange += (sender2, item2, oldIndex, newIndex, itemIndex) =>
+                VehicleModMenu.OnListIndexChange += (_, item2, oldIndex, newIndex, itemIndex) =>
                 {
                     // Get the vehicle and set the mod kit.
                     veh = GetVehicle();

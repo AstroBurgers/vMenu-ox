@@ -23,7 +23,7 @@ namespace vMenuClient
         public EntitySpawner()
         {
 #if DEBUG
-            RegisterCommand("testEntity", new Action<int, List<object>>((source, args) =>
+            RegisterCommand("testEntity", new Action<int, List<object>>((_, args) =>
             {
                 var prop = (string)args[0];
                 SpawnEntity(prop, Game.PlayerPed.Position);

@@ -81,19 +81,19 @@ namespace vMenuClient.menus
             // should be enough for now to cover all possible identifiers.
             var colors = new List<string>() { "~r~", "~g~", "~b~", "~o~", "~y~", "~p~", "~s~", "~t~", };
 
-            bannedPlayer.OnMenuClose += (sender) =>
+            bannedPlayer.OnMenuClose += (_) =>
             {
                 BaseScript.TriggerServerEvent("vMenu:RequestBanList", Game.Player.Handle);
                 bannedPlayer.GetMenuItems()[5].Label = "";
                 UpdateBans();
             };
 
-            bannedPlayer.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) =>
+            bannedPlayer.OnIndexChange += (_, _, _, _, _) =>
             {
                 bannedPlayer.GetMenuItems()[5].Label = "";
             };
 
-            bannedPlayer.OnItemSelect += (sender, item, index) =>
+            bannedPlayer.OnItemSelect += (_, item, index) =>
             {
                 if (index == 5 && IsAllowed(Permission.OPUnban))
                 {
@@ -122,7 +122,7 @@ namespace vMenuClient.menus
 
             };
 
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 currentRecord = item.ItemData;
 

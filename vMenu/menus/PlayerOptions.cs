@@ -226,7 +226,7 @@ namespace vMenuClient.menus
                     var checkbox = new MenuCheckboxItem(name, "Toggle this driving style flag.", false);
                     CustomDrivingStyleMenu.AddMenuItem(checkbox);
                 }
-                CustomDrivingStyleMenu.OnCheckboxChange += (sender, item, index, _checked) =>
+                CustomDrivingStyleMenu.OnCheckboxChange += (_, _, _, _) =>
                 {
                     var style = GetStyleFromIndex(drivingStyle.ListIndex);
                     CustomDrivingStyleMenu.MenuSubtitle = $"custom style: {style}";
@@ -248,7 +248,7 @@ namespace vMenuClient.menus
 
                 vehicleAutoPilot.RefreshIndex();
 
-                vehicleAutoPilot.OnItemSelect += async (sender, item, index) =>
+                vehicleAutoPilot.OnItemSelect += async (_, item, _) =>
                 {
                     if (Game.PlayerPed.IsInVehicle() && item != stopDriving && item != forceStopDriving)
                     {
@@ -327,7 +327,7 @@ namespace vMenuClient.menus
                     }
                 };
 
-                vehicleAutoPilot.OnListItemSelect += (sender, item, listIndex, itemIndex) =>
+                vehicleAutoPilot.OnListItemSelect += (_, item, listIndex, _) =>
                 {
                     if (item == drivingStyle)
                     {
@@ -351,7 +351,7 @@ namespace vMenuClient.menus
 
             #region handle all events
             // Checkbox changes.
-            menu.OnCheckboxChange += (sender, item, itemIndex, _checked) =>
+            menu.OnCheckboxChange += (_, item, _, _checked) =>
             {
                 // God Mode toggled.
                 if (item == playerGodModeCheckbox)
@@ -436,7 +436,7 @@ namespace vMenuClient.menus
             };
 
             // List selections
-            menu.OnListItemSelect += (sender, listItem, listIndex, itemIndex) =>
+            menu.OnListItemSelect += (_, listItem, listIndex, _) =>
             {
                 // Set wanted Level
                 if (listItem == setWantedLevel)
@@ -461,7 +461,7 @@ namespace vMenuClient.menus
             };
 
             // button presses
-            menu.OnItemSelect += (sender, item, index) =>
+            menu.OnItemSelect += (_, item, _) =>
             {
                 // Force Stop Scenario button
                 if (item == stopScenario)

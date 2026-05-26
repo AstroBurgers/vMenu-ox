@@ -46,7 +46,7 @@ namespace vMenuClient.menus
                         var settings = new JsonSerializerSettings
                         {
                             MissingMemberHandling = MissingMemberHandling.Ignore,
-                            Error = (sender, args) =>
+                            Error = (_, args) =>
                             {
                                 args.ErrorContext.Handled = true;
                             }
@@ -105,7 +105,7 @@ namespace vMenuClient.menus
                         var settings = new JsonSerializerSettings
                         {
                             MissingMemberHandling = MissingMemberHandling.Ignore,
-                            Error = (sender, args) =>
+                            Error = (_, args) =>
                             {
                                 args.ErrorContext.Handled = true;
                             }
@@ -162,7 +162,7 @@ namespace vMenuClient.menus
             {
                 menu.AddMenuItem(enableDefaultLoadouts);
 
-                menu.OnCheckboxChange += (sender, checkbox, index, _checked) =>
+                menu.OnCheckboxChange += (_, _, _, _checked) =>
                 {
                     WeaponLoadoutsSetLoadoutOnRespawn = _checked;
                 };
@@ -220,7 +220,7 @@ namespace vMenuClient.menus
             ManageLoadoutMenu.AddMenuItem(deleteLoadout);
 
             // Save the weapons loadout.
-            menu.OnItemSelect += async (sender, item, index) =>
+            menu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == saveLoadout)
                 {
@@ -256,7 +256,7 @@ namespace vMenuClient.menus
             };
 
             // manage spawning, renaming, deleting etc.
-            ManageLoadoutMenu.OnItemSelect += async (sender, item, index) =>
+            ManageLoadoutMenu.OnItemSelect += async (_, item, _) =>
             {
                 if (SavedWeapons.ContainsKey(SelectedSavedLoadoutName))
                 {
@@ -336,26 +336,26 @@ namespace vMenuClient.menus
             };
 
             // Reset the 'are you sure' states.
-            ManageLoadoutMenu.OnMenuClose += (sender) =>
+            ManageLoadoutMenu.OnMenuClose += (_) =>
             {
                 deleteLoadout.Label = "";
                 renameLoadout.Label = "";
             };
             // Reset the 'are you sure' states.
-            ManageLoadoutMenu.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) =>
+            ManageLoadoutMenu.OnIndexChange += (_, _, _, _, _) =>
             {
                 deleteLoadout.Label = "";
                 renameLoadout.Label = "";
             };
 
             // Refresh the spawned weapons menu whenever this menu is opened.
-            SavedLoadoutsMenu.OnMenuOpen += (sender) =>
+            SavedLoadoutsMenu.OnMenuOpen += (_) =>
             {
                 RefreshSavedWeaponsMenu();
             };
 
             // Set the current saved loadout whenever a loadout is selected.
-            SavedLoadoutsMenu.OnItemSelect += (sender, item, index) =>
+            SavedLoadoutsMenu.OnItemSelect += (_, item, _) =>
             {
                 if (SavedWeapons.ContainsKey("vmenu_string_saved_weapon_loadout_" + item.Text))
                 {
@@ -368,7 +368,7 @@ namespace vMenuClient.menus
             };
 
             // Reset the index whenever the ManageLoadout menu is opened. Just to prevent auto selecting the delete option for example.
-            ManageLoadoutMenu.OnMenuOpen += (sender) =>
+            ManageLoadoutMenu.OnMenuOpen += (_) =>
             {
                 ManageLoadoutMenu.RefreshIndex();
                 var kvp = GetResourceKvpString("vmenu_string_default_loadout");

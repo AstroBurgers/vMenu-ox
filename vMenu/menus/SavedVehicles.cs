@@ -56,12 +56,12 @@ namespace vMenuClient.menus
                 vehClassButton.Label = "→→→";
                 MenuController.BindMenuItem(classMenu, categoryMenu, vehClassButton);
 
-                categoryMenu.OnMenuClose += (sender) =>
+                categoryMenu.OnMenuClose += (_) =>
                 {
                     UpdateMenuAvailableCategories();
                 };
 
-                categoryMenu.OnItemSelect += (sender, item, index) =>
+                categoryMenu.OnItemSelect += (sender, item, _) =>
                 {
                     UpdateSelectedVehicleMenu(item, sender);
                 };
@@ -82,7 +82,7 @@ namespace vMenuClient.menus
             MenuController.AddMenu(selectedVehicleMenu);
 
             // Load selected category
-            vehicleCategoryMenu.OnItemSelect += async (sender, item, index) =>
+            vehicleCategoryMenu.OnItemSelect += async (_, item, _) =>
             {
                 // Create new category
                 if (item.ItemData is not SavedVehicleCategory)
@@ -466,7 +466,7 @@ namespace vMenuClient.menus
             selectedVehicleMenu.AddMenuItem(replaceVehicle);
             selectedVehicleMenu.AddMenuItem(deleteVehicle);
 
-            selectedVehicleMenu.OnMenuOpen += (sender) =>
+            selectedVehicleMenu.OnMenuOpen += (_) =>
             {
                 var vehicleModelExists = IsModelInCdimage(currentlySelectedVehicle.Value.model);
 
@@ -476,7 +476,7 @@ namespace vMenuClient.menus
                 spawnVehicle.Label = "(" + GetDisplayNameFromVehicleModel(currentlySelectedVehicle.Value.model).ToLower() + ")";
             };
 
-            selectedVehicleMenu.OnMenuClose += (sender) =>
+            selectedVehicleMenu.OnMenuClose += (_) =>
             {
                 selectedVehicleMenu.RefreshIndex();
                 deleteButtonPressedCount = 0;
@@ -485,7 +485,7 @@ namespace vMenuClient.menus
                 replaceVehicle.Label = "";
             };
 
-            selectedVehicleMenu.OnItemSelect += async (sender, item, index) =>
+            selectedVehicleMenu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == spawnVehicle)
                 {
@@ -650,7 +650,7 @@ namespace vMenuClient.menus
 
             unavailableVehiclesMenu.InstructionalButtons.Add(Control.FrontendDelete, "Delete Vehicle!");
 
-            unavailableVehiclesMenu.ButtonPressHandlers.Add(new Menu.ButtonPressHandler(Control.FrontendDelete, Menu.ControlPressCheckType.JUST_RELEASED, new Action<Menu, Control>((m, c) =>
+            unavailableVehiclesMenu.ButtonPressHandlers.Add(new Menu.ButtonPressHandler(Control.FrontendDelete, Menu.ControlPressCheckType.JUST_RELEASED, new Action<Menu, Control>((m, _) =>
             {
                 if (m.Size > 0)
                 {
@@ -698,8 +698,8 @@ namespace vMenuClient.menus
                     }
                 }
             }
-            unavailableVehiclesMenu.OnMenuClose += (sender) => ResetAreYouSure();
-            unavailableVehiclesMenu.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) => ResetAreYouSure();
+            unavailableVehiclesMenu.OnMenuClose += (_) => ResetAreYouSure();
+            unavailableVehiclesMenu.OnIndexChange += (_, _, _, _, _) => ResetAreYouSure();
 
             #endregion
         }
@@ -735,7 +735,7 @@ namespace vMenuClient.menus
             savedVehicleTypeMenu.AddMenuItem(classButton);
             savedVehicleTypeMenu.AddMenuItem(categoryButton);
 
-            savedVehicleTypeMenu.OnItemSelect += async (sender, item, index) =>
+            savedVehicleTypeMenu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == saveVehicle)
                 {

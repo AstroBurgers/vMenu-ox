@@ -1111,7 +1111,7 @@ namespace vMenuClient.menus
             inheritanceMenu.AddMenuItem(inheritanceSkinMix);
 
 
-            inheritanceMenu.OnListIndexChange += (_menu, listItem, oldSelectionIndex, newSelectionIndex, itemIndex) =>
+            inheritanceMenu.OnListIndexChange += (_, _, _, _, _) =>
             {
                 _dadSelection = inheritanceDads.ListIndex;
                 _mumSelection = inheritanceMoms.ListIndex;
@@ -1119,7 +1119,7 @@ namespace vMenuClient.menus
                 SetHeadBlend();
             };
 
-            inheritanceMenu.OnSliderPositionChange += (sender, item, oldPosition, newPosition, itemIndex) =>
+            inheritanceMenu.OnSliderPositionChange += (_, item, _, newPosition, _) =>
             {
                 // Chris: We can't call `.Position` on the slider items here because it returns the value *prior* to the change
                 switch (item.ItemData)
@@ -1142,7 +1142,7 @@ namespace vMenuClient.menus
 
             #region appearance
             // manage the list changes for appearance items.
-            appearanceMenu.OnListIndexChange += (_menu, listItem, oldSelectionIndex, newSelectionIndex, itemIndex) =>
+            appearanceMenu.OnListIndexChange += (_menu, _, _, newSelectionIndex, itemIndex) =>
             {
                 if (itemIndex == 0) // hair style
                 {
@@ -1278,7 +1278,7 @@ namespace vMenuClient.menus
             };
 
             // manage the slider changes for opacity on the appearance items.
-            appearanceMenu.OnListIndexChange += (_menu, listItem, oldSelectionIndex, newSelectionIndex, itemIndex) =>
+            appearanceMenu.OnListIndexChange += (_menu, _, _, _, itemIndex) =>
             {
                 if (itemIndex is > 2 and < 33)
                 {
@@ -1370,7 +1370,7 @@ namespace vMenuClient.menus
             #endregion
 
             #region clothes
-            clothesMenu.OnListIndexChange += (_menu, listItem, oldSelectionIndex, newSelectionIndex, realIndex) =>
+            clothesMenu.OnListIndexChange += (_, listItem, _, newSelectionIndex, realIndex) =>
             {
                 var componentIndex = realIndex + 1;
                 if (realIndex > 0)
@@ -1389,7 +1389,7 @@ namespace vMenuClient.menus
                 listItem.Description = $"Select a drawable using the arrow keys and press ~o~enter~s~ to cycle through all available textures. Currently selected texture: #{newTextureIndex + 1} (of {maxTextures}).";
             };
 
-            clothesMenu.OnListItemSelect += (sender, listItem, listIndex, realIndex) =>
+            clothesMenu.OnListItemSelect += (_, listItem, listIndex, realIndex) =>
             {
                 var componentIndex = realIndex + 1; // skip face options as that fucks up with inheritance faces
                 if (realIndex > 0) // skip hair features as that is done in the appeareance menu
@@ -1410,7 +1410,7 @@ namespace vMenuClient.menus
             #endregion
 
             #region props
-            propsMenu.OnListIndexChange += (_menu, listItem, oldSelectionIndex, newSelectionIndex, realIndex) =>
+            propsMenu.OnListIndexChange += (_, listItem, _, newSelectionIndex, realIndex) =>
             {
                 var propIndex = realIndex;
                 if (realIndex == 3)
@@ -1448,7 +1448,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            propsMenu.OnListItemSelect += (sender, listItem, listIndex, realIndex) =>
+            propsMenu.OnListItemSelect += (_, listItem, listIndex, realIndex) =>
             {
                 var propIndex = realIndex;
                 if (realIndex == 3)
@@ -1543,7 +1543,7 @@ namespace vMenuClient.menus
                 faceShapeMenu.AddMenuItem(faceFeature);
             }
 
-            faceShapeMenu.OnSliderPositionChange += (sender, sliderItem, oldPosition, newPosition, itemIndex) =>
+            faceShapeMenu.OnSliderPositionChange += (_, _, _, newPosition, itemIndex) =>
             {
                 currentCharacter.FaceShapeFeatures.features ??= new Dictionary<int, float>();
                 var value = faceFeaturesValuesList[newPosition];
@@ -1606,14 +1606,14 @@ namespace vMenuClient.menus
                 }
             }
 
-            tattoosMenu.OnIndexChange += (sender, oldItem, newItem, oldIndex, newIndex) =>
+            tattoosMenu.OnIndexChange += (_, _, _, _, _) =>
             {
                 CreateListsIfNull();
                 ApplySavedTattoos();
             };
 
             #region tattoos menu list select events
-            tattoosMenu.OnListIndexChange += (sender, item, oldIndex, tattooIndex, menuIndex) =>
+            tattoosMenu.OnListIndexChange += (_, _, _, tattooIndex, menuIndex) =>
             {
                 CreateListsIfNull();
                 ApplySavedTattoos();
@@ -1682,7 +1682,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            tattoosMenu.OnListItemSelect += (sender, item, tattooIndex, menuIndex) =>
+            tattoosMenu.OnListItemSelect += (_, _, tattooIndex, menuIndex) =>
             {
                 CreateListsIfNull();
 
@@ -1797,7 +1797,7 @@ namespace vMenuClient.menus
             };
 
             // eventhandler for when a tattoo is selected.
-            tattoosMenu.OnItemSelect += (sender, item, index) =>
+            tattoosMenu.OnItemSelect += (_, _, _) =>
             {
                 Notify.Success("All tattoos have been removed.");
                 currentCharacter.PedTatttoos.HeadTattoos.Clear();
@@ -1815,7 +1815,7 @@ namespace vMenuClient.menus
 
 
             // handle list changes in the character creator menu.
-            createCharacterMenu.OnListIndexChange += (sender, item, oldListIndex, newListIndex, itemIndex) =>
+            createCharacterMenu.OnListIndexChange += (_, item, _, newListIndex, _) =>
             {
                 if (item == faceExpressionList)
                 {
@@ -1832,7 +1832,7 @@ namespace vMenuClient.menus
             };
 
             // handle button presses for the createCharacter menu.
-            createCharacterMenu.OnItemSelect += async (sender, item, index) =>
+            createCharacterMenu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == randomizeButton)
                 {
@@ -2123,7 +2123,7 @@ namespace vMenuClient.menus
             };
 
             // eventhandler for whenever a menu item is selected in the main mp characters menu.
-            menu.OnItemSelect += async (sender, item, index) =>
+            menu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == createMaleBtn)
                 {
@@ -2322,7 +2322,7 @@ namespace vMenuClient.menus
 
             MenuController.BindMenuItem(manageSavedCharacterMenu, createCharacterMenu, editPedBtn);
 
-            manageSavedCharacterMenu.OnItemSelect += async (sender, item, index) =>
+            manageSavedCharacterMenu.OnItemSelect += async (_, item, _) =>
             {
                 if (item == editPedBtn)
                 {
@@ -2543,7 +2543,7 @@ namespace vMenuClient.menus
             };
 
             // reset the "are you sure" state.
-            manageSavedCharacterMenu.OnMenuClose += (sender) =>
+            manageSavedCharacterMenu.OnMenuClose += (_) =>
             {
                 foreach (var item in manageSavedCharacterMenu.GetMenuItems())
                 {
@@ -2555,7 +2555,7 @@ namespace vMenuClient.menus
             };
 
             // Load selected category
-            savedCharactersMenu.OnItemSelect += async (sender, item, index) =>
+            savedCharactersMenu.OnItemSelect += async (_, item, _) =>
             {
                 // Create new category
                 if (item.ItemData is not MpCharacterCategory)
@@ -2704,7 +2704,7 @@ namespace vMenuClient.menus
                 }
             };
 
-            savedCharactersCategoryMenu.OnIndexChange += async (menu, oldItem, newItem, oldIndex, newIndex) =>
+            savedCharactersCategoryMenu.OnIndexChange += async (_, _, newItem, _, _) =>
             {
                 if (!GetSettingsBool(Setting.vmenu_mp_ped_preview) || !MainMenu.MiscSettingsMenu.MPPedPreviews)
                 {

@@ -91,7 +91,7 @@ namespace vMenuClient.menus
             }
 
             // Handle button presses.
-            menu.OnItemSelect += async (sender, item, index) =>
+            menu.OnItemSelect += async (_, item, index) =>
             {
                 // If it's the freeze time button.
                 if (item == freezeTimeToggle)
@@ -128,7 +128,7 @@ namespace vMenuClient.menus
 
             };
 
-            menu.OnListItemSelect += async (sender, item, listIndex, itemIndex) =>
+            menu.OnListItemSelect += async (_, item, _, _) =>
             {
                 var newHour = EventManager.GetServerHours;
                 var newMinute = EventManager.GetServerMinutes;

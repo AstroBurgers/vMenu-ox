@@ -2839,7 +2839,7 @@ namespace vMenuClient
             var settings = new JsonSerializerSettings
             {
                 MissingMemberHandling = MissingMemberHandling.Ignore,
-                Error = (sender, args) =>
+                Error = (_, args) =>
                 {
                     args.ErrorContext.Handled = true;
                 }
